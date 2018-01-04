@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="24px" viewBox="0 0 25 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>NOK Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <ellipse id="path-1" cx="12" cy="12" rx="12" ry="12"></ellipse>
+        <path d="M6.39999838,1.3840754 C8.07177308,0.500370794 9.97745261,0 12,0 C12.2688228,0 12.5355811,0.00883948311 12.8,0.0262436438 L12.8,9.4 L23.7175715,9.4 C23.9025017,10.2371837 24,11.1072059 24,12 C24,13.3281047 23.7842458,14.6058173 23.3858754,15.8 L12.8,15.8 L12.8,23.9737564 C12.5355811,23.9911605 12.2688228,24 12,24 C9.97745261,24 8.07177308,23.4996292 6.4,22.6159254 L6.4,15.8 L0.614124633,15.8 C0.21575415,14.6058173 0,13.3281047 0,12 C0,11.1072059 0.097498336,10.2371837 0.28242845,9.4 L6.4,9.4 L6.4,1.38407455 L6.39999838,1.3840754 Z" id="path-3"></path>
+        <ellipse id="path-5" cx="12" cy="12" rx="12" ry="12"></ellipse>
+        <filter x="-4.2%" y="-4.2%" width="108.3%" height="108.3%" filterUnits="objectBoundingBox" id="filter-7">
+            <feGaussianBlur stdDeviation="1" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.039232337 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+            <feOffset dx="0" dy="-1" in="SourceAlpha" result="shadowOffsetInner2"></feOffset>
+            <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.03125 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="smaller" transform="translate(-217.000000, 0.000000)">
+            <g id="NOK-Copy" transform="translate(217.928952, 0.000000)">
+                <g id="Combined-Shape-+-Combined-Shape-Mask">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#F23434" xlink:href="#path-1"></use>
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Combined-Shape" fill="#FFFFFF" xlink:href="#path-3"></use>
+                    <path d="M8.4,0.614124633 L8.4,11.4 L0.214739004,11.4 C0.204951404,11.5987667 0.2,11.7988051 0.2,12 C0.2,12.6117721 0.245779794,13.2128517 0.334100494,13.8 L8.4,13.8 L8.4,23.3858754 C9.16836175,23.6421951 9.97130406,23.8229136 10.8,23.9192037 L10.8,13.8 L24.0658995,13.8 C24.1542202,13.2128517 24.2,12.6117721 24.2,12 C24.2,11.7988051 24.1950486,11.5987667 24.185261,11.4 L10.8,11.4 L10.8,0.0807962631 C9.97130406,0.17708643 9.16836175,0.357804857 8.4,0.614124633 L8.4,0.614124633 Z" id="Combined-Shape" fill="#284499" mask="url(#mask-4)"></path>
+                </g>
+                <mask id="mask-6" fill="white">
+                    <use xlink:href="#path-5"></use>
+                </mask>
+                <g id="Mask-Copy-2" fill-opacity="1" fill="black">
+                    <use filter="url(#filter-7)" xlink:href="#path-5"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

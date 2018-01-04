@@ -1,10 +1,12 @@
 <template>
-  <ul>
-    <CoinItem
-      v-for="coin in coins"
-      :key="coin.Id"
-      :coin="coin"
-    />
+  <table class="list">
+    <tbody>
+      <CoinItem
+        v-for="coin in coins"
+        :key="coin.Id"
+        :coin="coin"
+      />
+    </tbody>
   </ul>
 </template>
 
@@ -24,3 +26,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../variables.scss';
+
+.list {
+  width: 100%;
+  min-height: 137px;
+}
+
+</style>

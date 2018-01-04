@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>MXN Copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <ellipse id="path-1" cx="12" cy="12.0991736" rx="12" ry="11.9008264"></ellipse>
+        <filter x="-4.2%" y="-4.2%" width="108.3%" height="108.4%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="1" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.039232337 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+            <feOffset dx="0" dy="-1" in="SourceAlpha" result="shadowOffsetInner2"></feOffset>
+            <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.03125 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="MXN-Copy-2">
+            <ellipse id="Oval" fill="#FFFFFF" cx="12" cy="11.9008264" rx="12" ry="11.9008264"></ellipse>
+            <path d="M7.28,22.8457201 C2.99914695,21.0276195 0,16.8115725 0,11.9008264 C0,6.99008036 2.99914695,2.77403342 7.28,0.955932752 L7.28,22.8457201 Z" id="Combined-Shape" fill="#3F9B62"></path>
+            <path d="M24,22.8457201 C19.719147,21.0276195 16.72,16.8115725 16.72,11.9008264 C16.72,6.99008036 19.719147,2.77403342 24,0.955932752 L24,22.8457201 Z" id="Combined-Shape-Copy" fill="#F23434" transform="translate(20.360000, 11.900826) scale(-1, 1) translate(-20.360000, -11.900826) "></path>
+            <g id="Oval-Copy-3" fill-opacity="1" fill="black">
+                <use filter="url(#filter-2)" xlink:href="#path-1"></use>
+            </g>
+            <g id="Group-2" transform="translate(8.600000, 8.132231)">
+                <path d="M0,4.76033058 C0,6.62257998 1.52223185,8.1322314 3.4,8.1322314 L3.4,8.1322314 C5.27776815,8.1322314 6.8,6.62257998 6.8,4.76033058" id="Oval-3-Copy" stroke="#7ED321" stroke-width="1.2" stroke-linecap="round"></path>
+                <path d="M1.8,4.76033058 C1.8,5.63668324 2.5163444,6.34710744 3.4,6.34710744 L3.4,6.34710744 C4.2836556,6.34710744 5,5.63668324 5,4.76033058" id="Oval-3-Copy-3" stroke="#0A7BF4" stroke-width="1.2" stroke-linecap="round"></path>
+                <g id="Group" transform="translate(1.000000, 0.000000)">
+                    <path d="M0.8,-2.36847579e-14 C0.8,-2.36847579e-14 -5.96744876e-15,0.396694215 0.2,1.58677686 C0.4,2.7768595 1.4,3.57024793 1.2,4.56198347" id="Path-2" stroke="#68AB1B" stroke-width="0.9" stroke-linecap="round"></path>
+                    <path d="M2.02,1.09090909 L4.22,1.09090909 L4.22,2.83636364 L0.91391346,2.83636364 C0.552767028,2.83636364 0.475810547,2.62233665 0.722419281,2.377766 L2.02,1.09090909 Z" id="Combined-Shape" fill="#D07B2F"></path>
+                    <path d="M2.42,1.09090909 L3.82,1.09090909 L4.19125,4.58863636 C4.22921958,4.94636626 3.96192982,5.23636364 3.60052953,5.23636364 L2.63947047,5.23636364 C2.27525499,5.23636364 2.01164371,4.93823277 2.04875,4.58863636 L2.42,1.09090909 Z" id="Rectangle-4" fill="#D07B2F"></path>
+                    <path d="M3.12216348,1.38842975 C4.50152968,1.45256103 5.6,2.58195109 5.6,3.9657823 C5.6,5.34961352 4.50152968,6.47900358 3.12216348,6.54313486 L3.12216348,1.38842975 Z" id="Combined-Shape" fill="#8B572A" transform="translate(4.361082, 3.965782) rotate(42.000000) translate(-4.361082, -3.965782) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

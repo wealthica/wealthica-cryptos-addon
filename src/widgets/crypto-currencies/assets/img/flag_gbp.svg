@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="24px" viewBox="0 0 25 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>GBP Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <ellipse id="path-1" cx="12" cy="12" rx="12" ry="12"></ellipse>
+        <ellipse id="path-3" cx="12" cy="12" rx="12" ry="12"></ellipse>
+        <filter x="-4.2%" y="-4.2%" width="108.3%" height="108.3%" filterUnits="objectBoundingBox" id="filter-5">
+            <feGaussianBlur stdDeviation="1" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.039232337 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+            <feOffset dx="0" dy="-1" in="SourceAlpha" result="shadowOffsetInner2"></feOffset>
+            <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.03125 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="smaller" transform="translate(-130.000000, 0.000000)">
+            <g id="GBP-Copy" transform="translate(130.277087, 0.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#284499" xlink:href="#path-1"></use>
+                <g id="Group-2-Copy" mask="url(#mask-2)">
+                    <g transform="translate(11.950000, 12.000000) scale(-1, 1) translate(-11.950000, -12.000000) translate(0.850000, 3.500000)">
+                        <rect id="Rectangle-Copy-3" fill="#FFFFFF" transform="translate(11.050000, 8.500000) rotate(35.000000) translate(-11.050000, -8.500000) " x="-1.2" y="6.75" width="24.5" height="3.5"></rect>
+                        <path d="M0.786239986,0.579147687 L9.38733645,6.60170027 L8.81376001,7.42085231 L0.212663549,1.39829973 L0.786239986,0.579147687 Z M13.53624,9.82914769 L22.1373365,15.8517003 L21.56376,16.6708523 L12.9626635,10.6482997 L13.53624,9.82914769 Z" id="Combined-Shape" fill="#F23434"></path>
+                    </g>
+                </g>
+                <g id="Group-2-Copy-2" mask="url(#mask-2)">
+                    <g transform="translate(0.950000, 3.500000)">
+                        <rect id="Rectangle-Copy-3" fill="#FFFFFF" transform="translate(11.050000, 8.500000) rotate(35.000000) translate(-11.050000, -8.500000) " x="-1.2" y="6.75" width="24.5" height="3.5"></rect>
+                        <path d="M0.786239986,1.32914769 L9.38733645,7.35170027 L8.81376001,8.17085231 L0.212663549,2.14829973 L0.786239986,1.32914769 Z M15.28624,10.0791477 L23.8873365,16.1017003 L23.31376,16.9208523 L14.7126635,10.8982997 L15.28624,10.0791477 Z" id="Combined-Shape" fill="#F23434"></path>
+                    </g>
+                </g>
+                <g id="Group-3" mask="url(#mask-2)">
+                    <g transform="translate(-0.250000, -0.250000)">
+                        <rect id="Rectangle-Copy-12" fill="#FFFFFF" x="0" y="9.25" width="24.5" height="6"></rect>
+                        <rect id="Rectangle-Copy-10" fill="#FFFFFF" x="9.75" y="0" width="5" height="24.5"></rect>
+                        <path d="M14,10.5 L14,0 L10.5,0 L10.5,10.5 L0,10.5 L0,14 L10.5,14 L10.5,24.5 L14,24.5 L14,14 L24.5,14 L24.5,10.5 L14,10.5 Z" id="Combined-Shape" fill="#F23434"></path>
+                    </g>
+                </g>
+                <mask id="mask-4" fill="white">
+                    <use xlink:href="#path-3"></use>
+                </mask>
+                <g id="Mask-Copy" fill-opacity="1" fill="black">
+                    <use filter="url(#filter-5)" xlink:href="#path-3"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

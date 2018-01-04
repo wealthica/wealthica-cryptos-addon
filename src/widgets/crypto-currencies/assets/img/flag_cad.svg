@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>CAD Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <ellipse id="path-1" cx="11.6825884" cy="11.9008264" rx="11.6825884" ry="11.9008264"></ellipse>
+        <filter x="-4.3%" y="-4.2%" width="108.6%" height="108.4%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="1" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.039232337 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+            <feOffset dx="0" dy="-1" in="SourceAlpha" result="shadowOffsetInner2"></feOffset>
+            <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.03125 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="smaller">
+            <g id="CAD-Copy">
+                <ellipse id="Oval" fill="#FFFFFF" cx="11.6825884" cy="11.9008264" rx="11.6825884" ry="11.9008264"></ellipse>
+                <path d="M5.14033892,21.7620108 C2.03859443,19.6224273 0,16.0041438 0,11.9008264 C0,7.7975091 2.03859443,4.17922556 5.14033892,2.03964211 L5.14033892,21.7620108 Z" id="Combined-Shape" fill="#F23434"></path>
+                <path d="M23.3651769,21.7620108 C20.2634324,19.6224273 18.224838,16.0041438 18.224838,11.9008264 C18.224838,7.7975091 20.2634324,4.17922556 23.3651769,2.03964211 L23.3651769,21.7620108 Z" id="Combined-Shape-Copy" fill="#F23434" transform="translate(20.795007, 11.900826) scale(-1, 1) translate(-20.795007, -11.900826) "></path>
+                <path d="M9.29594624,15.0060118 L6.62358109,13.1275846 C6.50314788,13.0429311 6.51859083,12.9385955 6.65580097,12.8952623 L7.27048233,12.7011359 C7.40871009,12.6574813 7.4759631,12.5099633 7.42056554,12.3713184 L6.82981142,10.8928224 C6.77447233,10.7543238 6.84151658,10.6786666 6.979496,10.7238168 L8.40625445,11.1906863 C8.54426206,11.2358457 8.68563486,11.1540475 8.72145601,11.0102467 L8.8664367,10.4282348 C8.9025101,10.2834214 9.00653492,10.2588108 9.09967362,10.3743712 L10.3228426,11.891998 L9.85957012,8.7005577 C9.83800246,8.55198014 9.92119543,8.49655495 10.0431933,8.57534543 L10.6478289,8.96584017 C10.7708088,9.0452649 10.9234273,9.0002758 10.988263,8.86628173 L11.7371058,7.31866957 C11.8021424,7.18426023 11.9019473,7.18757326 11.9594734,7.32475135 L12.6033697,8.86019995 C12.6611433,8.99796817 12.8124934,9.05565168 12.9436153,8.98790519 L13.5223263,8.68890383 C13.6524651,8.62166528 13.7400361,8.68757036 13.718101,8.83490108 L13.2599978,11.9118352 L14.499155,10.3743712 C14.5922937,10.2588108 14.6963186,10.2834214 14.732392,10.4282348 L14.8773727,11.0102467 C14.9131938,11.1540475 15.0545666,11.2358457 15.1925742,11.1906863 L16.6193327,10.7238168 C16.7573121,10.6786666 16.8243563,10.7543238 16.7690173,10.8928224 L16.1782631,12.3713184 C16.1228656,12.5099633 16.1901186,12.6574813 16.3283463,12.7011359 L16.9430277,12.8952623 C17.0802378,12.9385955 17.0956808,13.0429311 16.9752476,13.1275846 L14.2842276,15.0191244 L14.4142043,16.0264463 C14.4142043,16.0264463 13.1017226,15.8908229 11.7892409,15.8908229 C10.4767593,15.8908229 9.16427758,16.0264463 9.16427758,16.0264463 L9.29594624,15.0060118 Z" id="LEAF" fill="#F23434"></path>
+                <g id="Oval-Copy-3" fill-opacity="1" fill="black">
+                    <use filter="url(#filter-2)" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
