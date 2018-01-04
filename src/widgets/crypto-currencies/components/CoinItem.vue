@@ -1,19 +1,23 @@
 <template>
   <li>
-    {{ todo.text }}
-    <button @click="$emit('remove', todo.id)">
-      X
-    </button>
+    {{ coin.Symbol }} - {{ coin.CoinName }} ({{ coin.prices[currency] }} {{ currency }})
   </li>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   props: {
-    todo: {
+    coin: {
       type: Object,
       required: true
     }
+  },
+  computed: {
+    ...mapGetters({
+      currency: 'preferredCurrency'
+    })
   }
 }
 </script>

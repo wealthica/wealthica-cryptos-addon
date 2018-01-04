@@ -1,24 +1,20 @@
 <template>
   <div id="app">
-    <TodoList/>
-    <ul>
-      <li>Outsider</li>
-    </ul>
+    <CoinList />
   </div>
+  <hr>
+  <p>something</p>
 </template>
 
 <script>
-import TodoList from './components/TodoList.vue'
-
+import CoinList from './CoinList.vue'
 export default {
-  components: {
-  TodoList
-  }
+  components: { CoinList }
 }
 </script>
 
 <style lang="scss">
-@import './variables.scss';
+@import '../variables.scss';
 
 *, *::before, *::after {
   box-sizing: border-box;
