@@ -17,11 +17,6 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
   entry: {
     app: './src/widgets/crypto-currencies/index'
   },
-  output: {
-    path: path.join(__dirname, './dist/widgets/crypto-currencies'),
-    filename: '[name].js',
-    publicPath: '/widgets/crypto-currencies/'
-  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -30,9 +25,10 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
-    path: config.build.assetsRoot,
+    path: path.join(__dirname, './dist/widgets/crypto-currencies'),
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
+    publicPath: ''
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -61,9 +57,7 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       title: 'Wealthica Crypto Currencies Widget',
-      filename: process.env.NODE_ENV === 'testing'
-        ? 'index.html'
-        : config.build.index,
+      filename: 'index.html',
       template: './src/widgets/crypto-currencies/template.html',
       inject: true,
       minify: {
