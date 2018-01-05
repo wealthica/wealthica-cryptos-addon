@@ -72,12 +72,13 @@ export default {
 
   &__coin-label {
     font-weight: bold;
-    font-size: 0.8rem;
+    font-size: 0.6666rem;
     background-color: $lighter-gray-color;
     border-radius: 12px;
-    padding: 0 5px;
-    height: 24px;
-    line-height: 24px;
+    height: 26px;
+    width: 26px;
+    line-height: 26px;
+    text-align: center;
 
     @include breakpoint(0 250px) {
       height: 20px;
