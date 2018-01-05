@@ -1,16 +1,25 @@
 <template>
   <div id="app">
     <CoinList />
-    <div class='divider'></div>
-    <Footer />
+    <div v-if="coins.length > 0" class='divider'></div>
+    <Footer v-if="coins.length > 0" />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import CoinList from './CoinList.vue'
 import Footer from './Footer.vue'
 export default {
-  components: { CoinList, Footer }
+  components: { CoinList, Footer },
+  computed: {
+    ...mapGetters({
+      coins: 'topCoins'
+    })
+  },
+  created () {
+    this.$store.dispatch('initAddon')
+  }
 }
 </script>
 
