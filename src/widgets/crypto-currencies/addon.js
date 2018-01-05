@@ -10,6 +10,19 @@ export default class Addon {
       });
     }
 
-    return instance;
+    this.instance = instance;
+  }
+
+  requestAPI (endpoint, { query, success, error }) {
+    this.instance.channel.call({
+      method: 'request',
+      params: {
+        method: 'GET',
+        endpoint,
+        query,
+      },
+      success,
+      error,
+    });
   }
 }

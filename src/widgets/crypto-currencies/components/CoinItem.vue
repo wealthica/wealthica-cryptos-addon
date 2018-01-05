@@ -3,13 +3,15 @@
     <td class="item__flags-cell">
       <div class="item__flags">
         <div class="item__flag">
-          <img :src="flagUrl" height="24" v-bind:title="currency">
+          <img v-if="swapped" :src="flagUrl" height="24" :title="currency">
+          <div v-else class="item__coin-label" :title="coin.CoinName">{{ coin.Symbol }}</div>
         </div>
-        <div class="item__swapper">
+        <div class="item__swapper" @click="$emit('swap')">
           <img src="../assets/img/swap.svg" width="18">
         </div>
         <div class="item__flag">
-          <div class="item__coin-label" v-bind:title="coin.CoinName">{{ coin.Symbol }}</div>
+          <div v-if="swapped" class="item__coin-label" :title="coin.CoinName">{{ coin.Symbol }}</div>
+          <img v-else :src="flagUrl" height="24" :title="currency">
         </div>
       </div>
     </td>
@@ -28,6 +30,10 @@ export default {
     coin: {
       type: Object,
       required: true
+    },
+    swapped: {
+      type: Boolean,
+      required: true
     }
   },
   computed: {
@@ -35,7 +41,7 @@ export default {
       return require(`../assets/img/flag_${this.currency.toLowerCase()}.svg`)
     },
     exchangeRate () {
-      return 1 / this.coin.prices[this.currency];
+      return this.swapped ? 1 / this.coin.prices[this.currency] : this.coin.prices[this.currency];
     },
     ...mapGetters({
       currency: 'preferredCurrency'
