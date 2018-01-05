@@ -3,12 +3,14 @@ import * as types from '../mutation-types';
 
 // initial state
 const state = {
-  addon: null
+  addon: null,
+  addonData: {}
 };
 
 // getters
 const getters = {
-  addon: state => state.addon
+  addon: state => state.addon,
+  language: state => state.addonData.language,
 };
 
 // actions

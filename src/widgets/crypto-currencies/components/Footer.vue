@@ -3,7 +3,7 @@
     <div class="footer__left"></div>
     <div class="footer__right">
       <div class="footer__note">
-        Updated Today
+        {{ $t('updated_today') }}
       </div>
     </div>
   </div>

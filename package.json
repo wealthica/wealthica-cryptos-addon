@@ -43,6 +43,7 @@
     "url-loader": "0.6.2",
     "vue": "2.5.13",
     "vue-loader": "13.6.2",
+    "vue-polyglot": "0.2.3",
     "vue-style-loader": "3.0.3",
     "vue-template-compiler": "2.5.13",
     "vuex": "3.0.1",
