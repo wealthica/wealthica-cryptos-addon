@@ -1,4 +1,4 @@
-import WealthicaAddon from '../../../../../../wealthica-addon-core/src';
+import { WealthicaAddon } from '../../../../../src/common/wealthica-addon';
 import * as types from '../mutation-types';
 
 // initial state
@@ -16,26 +16,17 @@ const getters = {
 // actions
 const actions = {
   initAddon ({ commit }) {
-    let addon = new Addon({
+    let addon = new WealthicaAddon({
       scope: 'wealthica-cryptos-addon/widgets/crypto-currencies',
-      init (trans, options) {
-        commit(types.UPDATE_ADDON_DATA, { data: options })
+      init (data) {
+        commit(types.UPDATE_ADDON_DATA, { data: data })
       },
-      postMessageObserver: function(origin, message) {
-        // Put debug call here
+      update (data) {
+        commit(types.UPDATE_ADDON_DATA, { data: data })
       },
-      gotMessageObserver: function(origin, message) {
-        // Put debug call here
-      },
-      update: function(trans, options) {
-        commit(types.UPDATE_ADDON_DATA, { data: options })
-      },
-      reload: function(trans, options) {
+      reload () {
         // Trigger app reload here
       },
-      vent_trigger: function(trans, options) {
-        // Propagate event here (options.eventName, options.eventParams)
-      }
     });
     commit(types.INIT_ADDON, { addon: addon });
   }
@@ -50,25 +41,6 @@ const mutations = {
     state.addonData = data;
   }
 };
-
-class Addon {
-  constructor (options={}) {
-    this.addon = new WealthicaAddon(options);
-  }
-
-  requestAPI (endpoint, { query, success, error }) {
-    this.addon.channel.call({
-      method: 'request',
-      params: {
-        method: 'GET',
-        endpoint,
-        query,
-      },
-      success,
-      error,
-    });
-  }
-}
 
 export default {
   state,
