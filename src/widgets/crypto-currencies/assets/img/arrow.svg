@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="5px" viewBox="0 0 10 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43 (38999) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-+-addons" transform="translate(-480.000000, -909.000000)" fill="#38C432">
+            <g id="base" transform="translate(-13.000000, 0.000000)">
+                <g id="Currency" transform="translate(213.000000, 836.000000)">
+                    <g id="row" transform="translate(0.000000, 62.000000)">
+                        <g id="arrow_icon" transform="translate(280.000000, 11.000000)">
+                            <path d="M0.246841309,0.674322248 C-0.163747465,0.301904354 -0.0507495855,0 0.501239995,0 L9.53051667,0 C10.081606,0 10.2000301,0.29779911 9.78491536,0.674322248 L5.75931507,4.32567775 C5.3487263,4.69809565 4.68755638,4.70220089 4.27244159,4.32567775 L0.246841309,0.674322248 Z" transform="translate(5.016720, 2.500000) scale(1, -1) translate(-5.016720, -2.500000) "></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

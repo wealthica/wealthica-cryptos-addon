@@ -1,22 +1,35 @@
 <template>
   <tr class="item">
-    <td class="item__flags-cell">
-      <div class="item__flags">
-        <div class="item__flag">
-          <img v-if="swapped" :src="flagUrl" height="24" :title="currency">
-          <div v-else class="item__coin-label" :title="coin.CoinName">{{ coin.Symbol }}</div>
+    <td class="item__currency-cell">
+      <div class="item__currency">
+        <div class="item__currency-image">
+          <img :src="coinLogoUrl" height="24" :title="coin.CoinName">
         </div>
-        <div class="item__swapper" @click="$emit('swap')">
-          <img src="../assets/img/swap.svg" width="18">
-        </div>
-        <div class="item__flag">
-          <div v-if="swapped" class="item__coin-label" :title="coin.CoinName">{{ coin.Symbol }}</div>
-          <img v-else :src="flagUrl" height="24" :title="currency">
+        <div class="item__currency-symbol">
+          {{ coin.Name }}
         </div>
       </div>
     </td>
-    <td class="item__rate-cell">
-      <div class="item__rate">{{ exchangeRate | formatExchangeRate }}</div>
+
+    <td class="item__price-cell">
+      <div class="item__price">{{ endPrice | formatExchangeRate }}</div>
+    </td>
+
+    <td :class="{
+      'item__change-cell': true,
+      green: change && change > 0,
+      red: change && change < 0
+    }">
+      <div class="item__change">
+        <div class="item__change-icon">
+          <img src="../assets/img/arrow.svg" height="5" :class="{
+            'item__change-icon-image': true,
+            up: change && change > 0,
+            down: change && change < 0
+          }">
+        </div>
+        <div class="item__change-number">{{ change | formatChangePercent }}</div>
+      </div>
     </td>
   </tr>
 </template>
@@ -24,6 +37,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import numeral from 'numeral';
+import SVGInjector from 'svg-injector';
 
 export default {
   props: {
@@ -31,102 +45,171 @@ export default {
       type: Object,
       required: true
     },
-    swapped: {
-      type: Boolean,
-      required: true
-    }
   },
+
   computed: {
     flagUrl () {
       return require(`../assets/img/flag_${this.currency.toLowerCase()}.svg`)
     },
-    exchangeRate () {
-      return this.swapped ? 1 / this.coin.prices[this.currency] : this.coin.prices[this.currency];
+    coinLogoUrl () {
+      return `https://www.cryptocompare.com${this.coin.ImageUrl}`
+    },
+    startPrice () {
+      return this.coin.prices.from[this.currency];
+    },
+    endPrice () {
+      return this.coin.prices.to[this.currency];
+    },
+    change () {
+      let result = (this.endPrice - this.startPrice) / Math.abs(this.startPrice);
+      let numDecimal = 2;
+      let roundingBase = Math.pow(10, numDecimal);
+
+      return Math.round(result * roundingBase) / roundingBase;
     },
     ...mapGetters({
       currency: 'preferredCurrency'
     })
   },
+
   filters: {
     formatExchangeRate (value, format='0,0.0[000000]') {
       return numeral(value).format(format);
+    },
+    formatChangePercent (value, format='0.00%') {
+      return numeral(value).format(format);
     }
+  },
+
+  methods: {
+    injectSVG() {
+      SVGInjector(this.$el.getElementsByClassName('item__change-icon-image'));
+    }
+  },
+
+  updated() {
+    this.injectSVG();
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../variables.scss';
 @import 'breakpoint-sass/stylesheets/breakpoint';
 
 .item {
   td {
     padding-bottom: 12px;
+    height: 33px;
   }
 
-  &__flag,
-  &__swapper {
+  &__currency {
     display: flex;
     align-items: center;
-  }
+    flex-wrap: nowrap;
 
-  &__coin-label {
-    font-weight: bold;
-    font-size: 0.6666rem;
-    background-color: $lighter-gray-color;
-    border-radius: 12px;
-    height: 26px;
-    width: 26px;
-    line-height: 26px;
-    text-align: center;
-
-    @include breakpoint(0 250px) {
-      height: 20px;
-      line-height: 20px;
-    }
-  }
-
-  &__flag {
-    @include breakpoint(0 250px) {
-      img {
-        width: 20px;
-      }
-    }
-
-    &s {
+    &-image {
       display: flex;
       align-items: center;
-      flex-wrap: nowrap;
+      margin-right: 5px;
 
-      &-cell {
-        padding-right: 5px;
-        width: 99%;
+      @include breakpoint(0 250px) {
+        img {
+          width: 20px;
+        }
       }
+    }
+
+    &-symbol {
+      font-size: 0.9333rem;
+      line-height: 1;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    &-cell {
+      padding-right: 5px;
+      width: 99%;
     }
   }
 
-  &__swapper {
-    cursor: pointer;
-    margin: 0 10px;
-
-    &:hover {
-      opacity: 0.9;
-    }
-
-    @include breakpoint(0 250px) {
-      margin: 0 5px;
-
-      img {
-        width: 15px;
-      }
-    }
-  }
-
-  &__rate {
+  &__price {
     font-size: 0.9333rem;
     text-align: right;
     line-height: 1;
     font-weight: bold;
+    background-color: $lighter-gray;
+    border-radius: 2px;
+    padding: 5px 9px;
+
+    &-cell {
+      padding-right: 10px;
+    }
+
+    @include breakpoint(0 250px) {
+      padding: 5px 5px;
+
+      &-cell {
+        padding-right: 5px;
+      }
+    }
+  }
+
+  &__change {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    &-icon {
+      margin-right: 5px;
+      display: flex;
+
+      @include breakpoint(0 250px) {
+        margin-right: 2px;
+      }
+
+      &-image {
+        display: none;
+
+        &.down {
+          transform: rotate(180deg);
+        }
+
+        .green &,
+        .red & {
+          display: inline;
+        }
+
+        .green & {
+          #arrow_icon {
+            fill: $green;
+          }
+        }
+
+        .red & {
+          #arrow_icon {
+            fill: $red;
+          }
+        }
+      }
+    }
+
+    &-number {
+      font-size: 0.9333rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    &-cell {
+      &.green {
+        color: $green;
+      }
+
+      &.red {
+        color: $red;
+      }
+    }
   }
 }
 

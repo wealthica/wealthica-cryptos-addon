@@ -47,12 +47,12 @@ body {
 }
 
 #app {
-  padding-top: 30px;
+  padding-top: 6px;
 }
 
 .divider {
   height: 1px;
-  background-color: $lighter-gray-color;
+  background-color: $lighter-gray;
   margin-bottom: 10px;
 }
 

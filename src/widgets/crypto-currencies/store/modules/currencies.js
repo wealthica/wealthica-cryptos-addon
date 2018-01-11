@@ -15,9 +15,11 @@ const getters = {
 const actions = {
   getPreferredCurrency ({ commit, rootGetters }) {
     return new Promise((resolve, reject) => {
-      currenciesAPI.getPreferredCurrency(rootGetters.addon, currency => {
-        commit(types.RECEIVE_PREFERRED_CURRENCY, { currency: currency });
-        resolve(currency);
+      currenciesAPI.getPreferredCurrency(rootGetters.addon, {
+        success(currency) {
+          commit(types.RECEIVE_PREFERRED_CURRENCY, { currency: currency });
+          resolve(currency);
+        }
       });
     });
   }

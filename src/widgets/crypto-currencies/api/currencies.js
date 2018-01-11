@@ -1,10 +1,10 @@
 export default {
-  getPreferredCurrency(addon, cb) {
+  getPreferredCurrency(addon, { success }) {
     addon.request({
       method: 'GET',
       endpoint: 'users/me',
-      success: response => cb(response.preferences.currency.toUpperCase()),
-      error: () => cb('USD')
+      success: response => success(response.preferences.currency.toUpperCase()),
+      error: () => success('USD')
     });
   }
 }
