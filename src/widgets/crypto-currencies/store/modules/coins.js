@@ -2,6 +2,7 @@ import cryptoAPI from '../../api/crypto';
 import * as types from '../mutation-types';
 import async from 'async';
 import moment from 'moment';
+import frcaLocale from 'moment/locale/fr-ca';
 
 // initial state
 const state = {
@@ -31,12 +32,13 @@ const actions = {
                 }).slice(0, numCoins);
 
                 top.forEach(coin => {
-                  coin.prices = { };
+                  coin.prices = {};
                 });
 
                 // Commit so widget can display the coins right away without
                 // having to wait for exchange rates to be available.
-                commit(types.RECEIVE_TOP_COIN_LIST, { coins: top });
+                commit(types.RECEIVE_TOP_COIN_LIST, { coins: top, rootGetters });
+
                 cb(null, top);
               },
               error (err) {
@@ -64,7 +66,7 @@ const actions = {
               coin.prices = prices[coin.Symbol];
             });
 
-            commit(types.RECEIVE_TOP_COIN_LIST, { coins: data.topCoins });
+            commit(types.RECEIVE_TOP_COIN_LIST, { coins: data.topCoins, rootGetters });
             callback(null, prices);
           },
           error (err) {
@@ -73,15 +75,17 @@ const actions = {
         });
       }
     ], (err, data) => {
-      if (err) commit(types.RECEIVE_TOP_COIN_LIST, { coins: [] });
+      if (err) commit(types.RECEIVE_TOP_COIN_LIST, { coins: [], rootGetters });
     });
   }
 };
 
 // mutations
 const mutations = {
-  [types.RECEIVE_TOP_COIN_LIST] (state, { coins }) {
+  [types.RECEIVE_TOP_COIN_LIST] (state, { coins, rootGetters }) {
     state.top = coins;
+
+    moment.locale(rootGetters.momentLocale, frcaLocale);
     state.updateTime = moment().calendar();
   }
 };

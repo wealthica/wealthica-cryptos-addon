@@ -11,6 +11,7 @@ const state = {
 const getters = {
   addon: state => state.addon,
   language: state => state.addonData.language,
+  momentLocale: (state, getters) => (getters.language === 'fr') ? 'fr-ca' : getters.language,
   dateFilter: state => {
     return {
       from: state.addonData.fromDate, to: state.addonData.toDate
