@@ -1,11 +1,11 @@
 <template>
   <div class="list__wrapper">
     <table class="list">
-      <thead>
+      <thead v-if="coins.length">
         <tr>
           <th></th>
-          <th class='price-header'>{{ $t('price_currency', null, { currency: currency }) }}</th>
-          <th class='change-header'>{{ $t('24h_change') }}</th>
+          <th class="price-header">{{ $t('price_currency', null, { currency: currency }) }}</th>
+          <th class="change-header">{{ $t('24h_change') }}</th>
         </tr>
       </thead>
       <tbody>
