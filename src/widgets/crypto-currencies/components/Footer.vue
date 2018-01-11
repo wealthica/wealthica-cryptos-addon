@@ -3,11 +3,23 @@
     <div class="footer__left"></div>
     <div class="footer__right">
       <div class="footer__note">
-        {{ $t('updated_today') }}
+        {{ $t('update_time', null, { time: updateTime }) }}
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex';
+
+export default {
+  computed: {
+    ...mapGetters({
+      updateTime: 'updateTime'
+    })
+  }
+}
+</script>
 
 <style lang="scss">
 @import '../variables.scss';

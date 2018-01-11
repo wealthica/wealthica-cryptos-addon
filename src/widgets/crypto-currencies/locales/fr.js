@@ -1,3 +1,5 @@
 export default {
-  updated_today: 'Updated Today french'
+  update_time: 'Mis à jour {time}',
+  '24h_change': 'Variation 24H',
+  price_currency: 'Prix ({currency})',
 }

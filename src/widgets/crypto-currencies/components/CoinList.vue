@@ -3,9 +3,9 @@
     <table class="list">
       <thead>
         <tr>
-          <th class='currency-header'>Crypto Currency</th>
-          <th class='price-header'>Price ({{ currency }})</th>
-          <th class='change-header'>24H Change</th>
+          <th></th>
+          <th class='price-header'>{{ $t('price_currency', null, { currency: currency }) }}</th>
+          <th class='change-header'>{{ $t('24h_change') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -59,11 +59,6 @@ th {
   height: 24px;
   padding-top: 0;
   padding-bottom: 0;
-}
-
-.currency-header {
-  text-align: left;
-  padding-right: 5px;
 }
 
 .price-header {

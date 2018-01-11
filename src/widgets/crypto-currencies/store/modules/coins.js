@@ -1,16 +1,18 @@
 import cryptoAPI from '../../api/crypto';
 import * as types from '../mutation-types';
-import moment from 'moment';
 import async from 'async';
+import moment from 'moment';
 
 // initial state
 const state = {
-  top: []
+  top: [],
+  updateTime: '',
 };
 
 // getters
 const getters = {
-  topCoins: state => state.top
+  topCoins: state => state.top,
+  updateTime: state => state.updateTime
 };
 
 // actions
@@ -29,7 +31,7 @@ const actions = {
                 }).slice(0, numCoins);
 
                 top.forEach(coin => {
-                  coin.prices = { from: {}, to: {} };
+                  coin.prices = { };
                 });
 
                 // Commit so widget can display the coins right away without
@@ -54,46 +56,20 @@ const actions = {
 
       // Get exchange rates at the start & end of dashboard period
       (data, callback) => {
-        async.parallel({
-          startRates (cb) {
-            cryptoAPI.getCoinPriceEOD({
-              coins: data.topCoins.map(x => x.Symbol),
-              currencies: [data.preferredCurrency],
-              timestamp: moment(rootGetters.dateFilter.from, 'YYYY-MM-DD').unix(),
-              success (prices) {
-                data.topCoins.forEach(coin => {
-                  coin.prices = coin.prices || {};
-                  coin.prices.from = prices[coin.Symbol];
-                });
-
-                commit(types.RECEIVE_TOP_COIN_LIST, { coins: data.topCoins });
-                cb(null, prices);
-              },
-              error (err) {
-                cb(err);
-              }
+        cryptoAPI.getCoinPrice({
+          coins: data.topCoins.map(x => x.Symbol),
+          currencies: [data.preferredCurrency],
+          success (prices) {
+            data.topCoins.forEach(coin => {
+              coin.prices = prices[coin.Symbol];
             });
+
+            commit(types.RECEIVE_TOP_COIN_LIST, { coins: data.topCoins });
+            callback(null, prices);
           },
-          endRates (cb) {
-            cryptoAPI.getCoinPrice({
-              coins: data.topCoins.map(x => x.Symbol),
-              currencies: [data.preferredCurrency],
-              success (prices) {
-                data.topCoins.forEach(coin => {
-                  coin.prices = coin.prices || {};
-                  coin.prices.to = prices[coin.Symbol];
-                });
-
-                commit(types.RECEIVE_TOP_COIN_LIST, { coins: data.topCoins });
-                cb(null, prices);
-              },
-              error (err) {
-                cb(err);
-              }
-            });
+          error (err) {
+            callback(err);
           }
-        }, (err, results) => {
-          callback(err, data);
         });
       }
     ], (err, data) => {
@@ -106,6 +82,7 @@ const actions = {
 const mutations = {
   [types.RECEIVE_TOP_COIN_LIST] (state, { coins }) {
     state.top = coins;
+    state.updateTime = moment().calendar();
   }
 };
 

@@ -9,24 +9,8 @@ export default {
   },
 
   getCoinPrice ({ coins, currencies, success, error }) {
-    axios.get(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${coins.join(',')}&tsyms=${currencies.join(',')}`)
-      .then(response => success(response.data))
+    axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coins.join(',')}&tsyms=${currencies.join(',')}`)
+      .then(response => success(response.data['RAW']))
       .catch(err => error(err));
-  },
-
-  getCoinPriceEOD ({ coins, currencies, timestamp, success, error }) {
-    async.map(coins, (coin, callback) => {
-      axios.get(`https://min-api.cryptocompare.com/data/pricehistorical?fsym=${coin}&tsyms=${currencies.join(',')}&ts=${timestamp}`)
-        .then(response => callback(null, response.data))
-        .catch(err => callback(err));
-    }, (err, results) => {
-      if (err) return error(err);
-
-      let prices = results.reduce((result, price) => {
-        return Object.assign(result, price);
-      }, {});
-
-      success(prices);
-    })
   }
 }

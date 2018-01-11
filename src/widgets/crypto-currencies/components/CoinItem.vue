@@ -55,10 +55,11 @@ export default {
       return `https://www.cryptocompare.com${this.coin.ImageUrl}`
     },
     startPrice () {
-      return this.coin.prices.from[this.currency];
+      return this.coin.prices[this.currency] ? this.coin.prices[this.currency]['OPEN24HOUR'] : null;
+
     },
     endPrice () {
-      return this.coin.prices.to[this.currency];
+      return this.coin.prices[this.currency] ? this.coin.prices[this.currency]['PRICE'] : null;
     },
     change () {
       let result = (this.endPrice - this.startPrice) / Math.abs(this.startPrice);
