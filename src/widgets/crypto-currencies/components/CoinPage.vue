@@ -23,18 +23,18 @@
 import { mapGetters } from 'vuex';
 import CoinItem from './CoinItem';
 
-const NUM_COINS = 3;
-
 export default {
+  props: {
+    coins: {
+      type: Array,
+      required: true
+    },
+  },
   components: { CoinItem },
   computed: {
     ...mapGetters({
-      coins: 'topCoins',
       currency: 'preferredCurrency'
     })
-  },
-  created () {
-    this.$store.dispatch('getTopCoins', NUM_COINS);
   }
 }
 </script>

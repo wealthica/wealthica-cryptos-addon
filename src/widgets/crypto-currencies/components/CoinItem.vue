@@ -1,9 +1,9 @@
 <template>
   <tr class="item">
     <td class="item__currency-cell">
-      <div class="item__currency">
+      <div class="item__currency" :title="coin.CoinName">
         <div class="item__currency-image">
-          <img :src="coinLogoUrl" height="24" :title="coin.CoinName">
+          <img :src="coinLogoUrl" height="24">
         </div>
         <div class="item__currency-symbol">
           {{ coin.Name }}
@@ -12,7 +12,7 @@
     </td>
 
     <td class="item__price-cell">
-      <div class="item__price">{{ endPrice | formatExchangeRate }}</div>
+      <div class="item__price">{{ endPrice | formatPrice }}</div>
     </td>
 
     <td :class="{
@@ -48,6 +48,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      currency: 'preferredCurrency'
+    }),
     flagUrl () {
       return require(`../assets/img/flag_${this.currency.toLowerCase()}.svg`)
     },
@@ -56,7 +59,6 @@ export default {
     },
     startPrice () {
       return this.coin.prices[this.currency] ? this.coin.prices[this.currency]['OPEN24HOUR'] : null;
-
     },
     endPrice () {
       return this.coin.prices[this.currency] ? this.coin.prices[this.currency]['PRICE'] : null;
@@ -68,13 +70,12 @@ export default {
 
       return Math.round(result * roundingBase) / roundingBase;
     },
-    ...mapGetters({
-      currency: 'preferredCurrency'
-    })
   },
 
   filters: {
-    formatExchangeRate (value, format='0,0.0[000000]') {
+    formatPrice (value, format='0,0.0[000000]') {
+      if (value > 1) format = '0,0.00';
+
       return numeral(value).format(format);
     },
     formatChangePercent (value, format='0.00%') {

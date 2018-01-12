@@ -18,10 +18,12 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
     app: './src/widgets/crypto-currencies/index'
   },
   module: {
-    rules: utils.styleLoaders({
-      sourceMap: config.build.productionSourceMap,
-      extract: true
-    })
+    rules: [
+      ...utils.styleLoaders({
+        sourceMap: config.build.productionSourceMap,
+        extract: true
+      }),
+    ],
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
@@ -30,7 +32,17 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
     publicPath: ''
   },
+  resolve: {
+    alias: {
+      'jquery': 'jquery/src/jquery',
+      'glide': 'glidejs/dist/glide',
+    }
+  },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+    }),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
@@ -99,7 +111,7 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
   ]
 });
 

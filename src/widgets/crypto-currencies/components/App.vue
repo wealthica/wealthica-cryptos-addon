@@ -1,17 +1,29 @@
 <template>
   <div id="app">
-    <CoinList />
-    <div v-if="coins.length > 0" class='divider'></div>
-    <Footer v-if="coins.length > 0" />
+    <div class="container glide">
+      <div class="glide__wrapper">
+        <CoinPages />
+      </div>
+
+      <div class="glide__bullets"></div>
+
+      <div v-if="coins.length > 0" class='divider'></div>
+
+      <Footer v-if="coins.length > 0" />
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import CoinList from './CoinList.vue'
-import Footer from './Footer.vue'
+import CoinPages from './CoinPages.vue';
+import Footer from './Footer.vue';
+
+import 'script-loader!glide';
+import 'glidejs/dist/css/glide.core.css';
+
 export default {
-  components: { CoinList, Footer },
+  components: { CoinPages, Footer },
   computed: {
     ...mapGetters({
       coins: 'topCoins'
@@ -19,6 +31,14 @@ export default {
   },
   created () {
     this.$store.dispatch('initAddon')
+  },
+  updated () {
+    this.$nextTick(() => {
+      $('.glide').glide({
+        type: 'carousel',
+        autoplay: false
+      });
+    })
   }
 }
 </script>
@@ -54,6 +74,38 @@ body {
   height: 1px;
   background-color: $lighter-gray;
   margin-bottom: 10px;
+}
+
+.glide {
+  &__wrapper {
+    min-height: 161px;
+  }
+
+  &__bullet {
+    width: 5px;
+    height: 5px;
+    background-color: $bullet-color;
+    border: none;
+    padding: 0;
+    border-radius: 500rem;
+    margin-right: 3px;
+    outline: none;
+    -webkit-appearance: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      background-color: $bullet-active-color;
+    }
+
+    &s {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
 }
 
 </style>
