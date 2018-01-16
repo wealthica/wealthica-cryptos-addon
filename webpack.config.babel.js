@@ -112,6 +112,14 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
+    // copy data files
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, './data'),
+        to: path.resolve(__dirname, './dist'),
+        ignore: ['.*']
+      }
+    ]),
   ]
 });
 
