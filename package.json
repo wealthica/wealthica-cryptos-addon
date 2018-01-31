@@ -8,7 +8,7 @@
     "prebuild": "rimraf dist",
     "build": "webpack -p"
   },
-  "author": "Cody Nguyen <hi@cody.vn> (https://cody.vn/)",
+  "author": "Wealthica Financial Technology Inc. <hello@wealthica.com> (https://wealthica.com/)",
   "license": "MIT",
   "devDependencies": {
     "async": "2.6.0",
@@ -70,5 +70,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "license": "MIT"
 }
