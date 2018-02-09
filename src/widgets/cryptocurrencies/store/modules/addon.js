@@ -23,7 +23,7 @@ const getters = {
 const actions = {
   initAddon ({ commit }) {
     let addon = new WealthicaAddon({
-      scope: 'wealthica/wealthica-cryptos-addon/widgets/crypto-currencies',
+      scope: 'wealthica/wealthica-cryptos-addon/widgets/cryptocurrencies',
       init (data) {
         commit(types.UPDATE_ADDON_DATA, { data: data })
       },

@@ -1,7 +1,7 @@
 {
   "name": "wealthica-cryptos-core",
   "version": "1.0.0",
-  "description": "Wealthica Crypto Currencies Addon",
+  "description": "Wealthica Cryptos Addon",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
