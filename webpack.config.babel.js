@@ -15,7 +15,7 @@ var env = process.env.NODE_ENV === 'testing'
 
 var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
   entry: {
-    app: './src/widgets/crypto-currencies/index'
+    app: './src/widgets/cryptocurrencies/index'
   },
   module: {
     rules: [
@@ -27,7 +27,7 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
-    path: path.join(__dirname, './dist/widgets/crypto-currencies'),
+    path: path.join(__dirname, './dist/widgets/cryptocurrencies'),
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
     publicPath: ''
@@ -68,9 +68,9 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      title: 'Wealthica Crypto Currencies Widget',
+      title: 'Wealthica Cryptocurrencies Widget',
       filename: 'index.html',
-      template: './src/widgets/crypto-currencies/template.html',
+      template: './src/widgets/cryptocurrencies/template.html',
       inject: true,
       minify: {
         removeComments: true,

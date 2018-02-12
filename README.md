@@ -1,6 +1,6 @@
 # wealthica-cryptos-addon
 
-This add-on provides the Crypto Currencies widget that displays latest pricing for the most popular crypto currencies in Wealthica Dashboard.
+This add-on provides the Cryptocurrencies widget that displays latest pricing for the most popular cryptocurrencies in Wealthica Dashboard.
 
 This repo also serves as an example of building add-ons for Wealthica using [Vue](https://vuejs.org), [webpack](https://webpack.js.org/).
 
@@ -31,7 +31,7 @@ An add-on can contain more than 1 widget. Each widget needs to be placed under `
     ├── addon.json (*)
     ├── icon.png (*)
     └── widgets (*)
-        └── crypto-currencies (*)
+        └── cryptocurrencies (*)
             ├── assets
             │   ├── css
             │   │   ├── app.css
@@ -55,12 +55,12 @@ This file provides the add-on's information. Example:
     {
       "author_name": "Wealthica Financial Technology Inc.",
       "full_description": {
-        "en": "Track your crypto currencies investments.",
-        "fr": "Track your crypto currencies investments."
+        "en": "Track your cryptocurrencies investments.",
+        "fr": "Suivez vos investissements en cryptomonnaies."
       },
       "widgets": [
         {
-          "_id": "crypto-currencies"
+          "_id": "cryptocurrencies"
         }
       ],
       "preview_images": [
