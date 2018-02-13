@@ -58,11 +58,6 @@ This file provides the add-on's information. Example:
         "en": "Track your cryptocurrencies investments.",
         "fr": "Suivez vos investissements en cryptomonnaies."
       },
-      "widgets": [
-        {
-          "_id": "cryptocurrencies"
-        }
-      ],
       "preview_images": [
         "data:image/jpeg;base64,...",
         "data:image/jpeg;base64,..."
