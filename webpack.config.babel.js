@@ -15,7 +15,8 @@ var env = process.env.NODE_ENV === 'testing'
 
 var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
   entry: {
-    app: './src/widgets/cryptocurrencies/index'
+    app: './src/widgets/cryptocurrencies/index',
+    config: './src/widgets/cryptocurrencies/config',
   },
   module: {
     rules: [
@@ -79,6 +80,24 @@ var cryptoCurrenciesWidget = merge(baseWebpackConfig, {
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
+      chunks: ['app', 'vendor', 'manifest'],
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
+    }),
+    // generate dist config.html
+    new HtmlWebpackPlugin({
+      title: 'Wealthica Crypto Currencies Widget Config',
+      filename: 'config.html',
+      template: './src/widgets/cryptocurrencies/template.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      chunks: ['config', 'vendor', 'manifest'],
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
