@@ -21,12 +21,11 @@
       red: change && change < 0
     }">
       <div class="item__change">
-        <div class="item__change-icon">
-          <img src="../assets/img/arrow.svg" height="5" :class="{
-            'item__change-icon-image': true,
-            up: change && change > 0,
-            down: change && change < 0
-          }">
+        <div class="item__change-icon" :class="{
+          up: change && change > 0,
+          down: change && change < 0
+        }">
+          <img src="../assets/img/arrow.svg" height="5" class="item__change-icon-image">
         </div>
         <div class="item__change-number">{{ change | formatChangePercent }}</div>
       </div>
@@ -167,16 +166,16 @@ export default {
       margin-right: 5px;
       display: flex;
 
+      &.down {
+        transform: rotate(180deg);
+      }
+
       @include breakpoint(0 250px) {
         margin-right: 2px;
       }
 
       &-image {
         display: none;
-
-        &.down {
-          transform: rotate(180deg);
-        }
 
         .green &,
         .red & {
