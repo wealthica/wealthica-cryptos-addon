@@ -83,12 +83,12 @@ export default {
   },
 
   methods: {
-    injectSVG() {
+    injectSVG () {
       SVGInjector(this.$el.getElementsByClassName('item__change-icon-image'));
     }
   },
 
-  updated() {
+  updated () {
     this.injectSVG();
   }
 }

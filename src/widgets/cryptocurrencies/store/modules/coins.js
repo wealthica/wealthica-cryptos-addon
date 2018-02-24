@@ -27,6 +27,8 @@ const actions = {
           topCoins (cb) {
             cryptoAPI.getCoinList({
               success (coins) {
+                console.log('getCoinList success, addon config:', rootGetters.config);
+
                 let top = coins.sort((a, b) => {
                   return a.SortOrder - b.SortOrder;
                 }).slice(0, numCoins);

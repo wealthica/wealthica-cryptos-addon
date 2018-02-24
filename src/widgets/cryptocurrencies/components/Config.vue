@@ -1,45 +1,41 @@
 <template>
   <div id="app">
-    <div class="container glide">
-      <div class="glide__wrapper">
-        <CoinPages />
-      </div>
-
-      <div class="glide__bullets"></div>
-
-      <div v-if="coins.length > 0" class='divider'></div>
-
-      <Footer v-if="coins.length > 0" />
-    </div>
+    <div class="config-string">{{ newConfig }}</div>
+    <br><br>
+    <textarea v-model="newConfig"></textarea>
+    <br><br>
+    <button @click="saveConfig">Save</button>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import CoinPages from './CoinPages.vue';
-import Footer from './Footer.vue';
-
-import 'script-loader!glide';
-import 'glidejs/dist/css/glide.core.css';
 
 export default {
-  components: { CoinPages, Footer },
+  data () {
+    return {
+      newConfig: 'abc',
+    }
+  },
   computed: {
-    ...mapGetters({
-      coins: 'topCoins'
-    })
+    ...mapGetters(['config']),
+  },
+  watch: {
+    config (val) {
+      this.newConfig = JSON.stringify(val);
+    }
+  },
+  methods: {
+    saveConfig () {
+      let newConfig = JSON.parse(this.newConfig);
+      this.$store.dispatch('updateConfig', newConfig).then((response) => {
+        console.log('saved', response);
+      });
+    }
   },
   created () {
-    this.$store.dispatch('initAddon')
+    this.$store.dispatch('initAddon');
   },
-  updated () {
-    this.$nextTick(() => {
-      $('.glide').glide({
-        type: 'carousel',
-        autoplay: false
-      });
-    })
-  }
 }
 </script>
 
@@ -67,45 +63,7 @@ body {
 }
 
 #app {
-  padding-top: 6px;
-}
-
-.divider {
-  height: 1px;
-  background-color: $lighter-gray;
-  margin-bottom: 10px;
-}
-
-.glide {
-  &__wrapper {
-    min-height: 161px;
-  }
-
-  &__bullet {
-    width: 5px;
-    height: 5px;
-    background-color: $bullet-color;
-    border: none;
-    padding: 0;
-    border-radius: 500rem;
-    margin-right: 3px;
-    outline: none;
-    -webkit-appearance: none;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    &.active {
-      background-color: $bullet-active-color;
-    }
-
-    &s {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
-  }
+  min-height: 300px;
 }
 
 </style>
