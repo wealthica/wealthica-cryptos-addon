@@ -25,7 +25,7 @@
           up: change && change > 0,
           down: change && change < 0
         }">
-          <img src="../assets/img/arrow.svg" height="5" class="item__change-icon-image">
+          <img src="../../assets/img/arrow.svg" height="5" class="item__change-icon-image">
         </div>
         <div class="item__change-number">{{ change | formatChangePercent }}</div>
       </div>
@@ -51,7 +51,7 @@ export default {
       currency: 'preferredCurrency'
     }),
     flagUrl () {
-      return require(`../assets/img/flag_${this.currency.toLowerCase()}.svg`)
+      return require(`../../assets/img/flag_${this.currency.toLowerCase()}.svg`)
     },
     coinLogoUrl () {
       return `https://www.cryptocompare.com${this.coin.ImageUrl}`
@@ -95,7 +95,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../variables.scss';
+@import '../../styles/variables.scss';
 @import 'breakpoint-sass/stylesheets/breakpoint';
 
 .item {

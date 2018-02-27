@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../variables.scss';
+@import '../../styles/variables.scss';
 
 html {
   font-size: 15px;

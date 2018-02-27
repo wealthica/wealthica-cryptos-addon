@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Polyglot from 'vue-polyglot';
 import { mapGetters } from 'vuex';
-import App from './components/App.vue';
+import App from './components/coins/App.vue';
 import store from './store';
 import locales from './locales';
 

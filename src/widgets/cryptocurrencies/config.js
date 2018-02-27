@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Polyglot from 'vue-polyglot';
 import { mapGetters } from 'vuex';
-import Config from './components/Config.vue';
+import App from './components/config/App.vue';
 import store from './store';
 import locales from './locales';
 
@@ -26,5 +26,5 @@ new Vue({
       this.$polyglot.setLang({ lang });
     }
   },
-  render: h => h(Config)
+  render: h => h(App)
 });

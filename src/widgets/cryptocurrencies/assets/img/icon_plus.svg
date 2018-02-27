@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>(+)</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Add-Ons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-Copy" transform="translate(-516.000000, -592.000000)">
+            <g id="panel" transform="translate(495.000000, 235.000000)">
+                <g id="Available-Widgets" transform="translate(20.000000, 353.000000)">
+                    <g id="(+)" transform="translate(1.000000, 4.000000)">
+                        <circle id="Oval-16" fill="#04CA00" cx="7" cy="7" r="7"></circle>
+                        <path d="M6.3,6.3 L4.2,6.3 L4.2,6.3 C3.81340068,6.3 3.5,6.61340068 3.5,7 L3.5,7 C3.5,7.38659932 3.81340068,7.7 4.2,7.7 L6.3,7.7 L6.3,9.8 C6.3,10.1865993 6.61340068,10.5 7,10.5 C7.38659932,10.5 7.7,10.1865993 7.7,9.8 L7.7,9.8 L7.7,7.7 L9.8,7.7 C10.1865993,7.7 10.5,7.38659932 10.5,7 L10.5,7 C10.5,6.61340068 10.1865993,6.3 9.8,6.3 L9.8,6.3 L7.7,6.3 L7.7,4.2 C7.7,3.81340068 7.38659932,3.5 7,3.5 L7,3.5 L7,3.5 C6.61340068,3.5 6.3,3.81340068 6.3,4.2 L6.3,6.3 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

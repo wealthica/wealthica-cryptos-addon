@@ -13,7 +13,6 @@
 import { mapGetters } from 'vuex';
 import CoinPage from './CoinPage';
 
-const NUM_COINS = 6;
 const PER_PAGE = 3;
 
 export default {
@@ -27,7 +26,7 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('getTopCoins', NUM_COINS);
+    this.$store.dispatch('getTopCoins');
   }
 }
 </script>

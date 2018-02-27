@@ -1,11 +1,9 @@
-import { WealthicaAddon } from '../../../../../src/common/wealthica-addon';
 import * as types from '../mutation-types';
 import _ from 'lodash';
 
 // initial state
 const state = {
-  addon: null,
-  addonData: {},
+  config: {},
 };
 
 // getters
@@ -38,7 +36,6 @@ const actions = {
         // Trigger app reload here
       },
     });
-
     commit(types.INIT_ADDON, { addon });
   },
 
