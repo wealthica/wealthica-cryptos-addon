@@ -10,13 +10,14 @@
       />
 
       <List
-        :coins="availableCoins"
+        :coins="allCoins"
+        :activeCoins="activeCoins"
         :isActive="false"
         :maxReached="maxReached"
         @add="add"
       />
     </div>
-    <div class="btn--save" @click="saveConfig">Save</div>
+    <div class="btn--save" :class="{'loading disabled': saving}" @click="saveConfig">Save</div>
   </div>
 </template>
 
@@ -32,18 +33,11 @@ export default {
       activeCoins: [],
       maxReached: false,
       minReached: false,
+      saving: false,
     }
   },
   computed: {
     ...mapGetters(['activeCoinSymbols', 'allCoins']),
-    availableCoins () {
-      // TODO remove this 50 coins limit, and find a way to display all 2000+
-      // coins (pagination?)
-      let coins = this.allCoins.slice(0, 50);
-      return coins.filter((x) => {
-        return this.activeCoins.indexOf(x.Symbol) === -1;
-      });
-    },
   },
   watch: {
     activeCoinSymbols (val) {
@@ -68,8 +62,10 @@ export default {
       this.activeCoins = this.activeCoins.filter(x => x !== symbol);
     },
     saveConfig () {
+      this.saving = true;
       let newConfig = { coins: this.activeCoins };
       this.$store.dispatch('updateConfig', newConfig).then((response) => {
+        this.saving = false;
         console.log('saved', response);
       });
     }
@@ -83,6 +79,15 @@ export default {
 
 <style lang="scss">
 @import '../../styles/variables.scss';
+
+@keyframes button-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 html {
   font-size: 15px;
@@ -139,6 +144,50 @@ body {
 
   &:active {
     background-color: darken($purple, 10%) !important;
+  }
+
+  &--disabled, &.disabled, &[disabled] {
+    pointer-events: none !important;
+    opacity: 0.5 !important;
+  }
+
+  &--loading, &.loading {
+    position: relative;
+    cursor: default;
+    text-shadow: none !important;
+    color: transparent !important;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0s linear, opacity 0.1s ease;
+
+    &:before {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 50%;
+      margin: -0.63333333em 0em 0em -0.63333333em;
+      width: 1.26666667em;
+      height: 1.26666667em;
+      border-radius: 500rem;
+      border: 0.2em solid rgba(0, 0, 0, 0.15);
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 50%;
+      margin: -0.63333333em 0em 0em -0.63333333em;
+      width: 1.26666667em;
+      height: 1.26666667em;
+      animation: button-spin 0.6s linear;
+      animation-iteration-count: infinite;
+      border-radius: 500rem;
+      border-color: #FFFFFF transparent transparent;
+      border-style: solid;
+      border-width: 0.2em;
+      box-shadow: 0px 0px 0px 1px transparent;
+    }
   }
 }
 

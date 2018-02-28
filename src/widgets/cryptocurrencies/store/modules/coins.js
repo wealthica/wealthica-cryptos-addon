@@ -11,6 +11,7 @@ const state = {
   activeCoins: [],
   activeCoinSymbols: [],
   updateTime: '',
+  prices: {},
 };
 
 // getters
@@ -19,6 +20,7 @@ const getters = {
   activeCoins: state => state.activeCoins,
   activeCoinSymbols: state => state.activeCoinSymbols,
   updateTime: state => state.updateTime,
+  prices: state => state.prices,
 };
 
 // actions
@@ -27,10 +29,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       cryptoAPI.getCoinList({
         success (coins) {
-          coins.forEach(coin => {
-            coin.prices = {};
-          })
-
           commit(types.RECEIVE_COINS_LIST, { coins });
           if (getters.activeCoinSymbols.length) {
             let activeCoins = coins.filter(x => getters.activeCoinSymbols.indexOf(x.Symbol) > -1);
@@ -88,9 +86,9 @@ const actions = {
       });
     },
 
-    activeCoinPrices: ['allCoins', 'preferredCurrency', (results, cb) => {
+    prices: ['allCoins', 'preferredCurrency', (results, cb) => {
       let coinsToGet = getters.activeCoins.filter(coin => {
-        return _.isEmpty(coin.prices[results.preferredCurrency]);
+        return _.isEmpty(getters.prices[coin.Symbol]);
       });
 
       cryptoAPI.getCoinPrice({
@@ -104,7 +102,7 @@ const actions = {
     }, (err, results) => {
       if (err) return commit(types.UPDATE_COIN_PRICES, { prices: {} });
 
-      commit(types.UPDATE_COIN_PRICES, { prices: results.activeCoinPrices });
+      commit(types.UPDATE_COIN_PRICES, { prices: results.prices });
       commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
     });
   }
@@ -113,9 +111,7 @@ const actions = {
 // mutations
 const mutations = {
   [types.UPDATE_COIN_PRICES] (state, { prices }) {
-    state.activeCoins.forEach(coin => {
-      coin.prices = prices[coin.Symbol];
-    });
+    state.prices = _.extend({}, state.prices, prices);
   },
 
   [types.UPDATE_ACTIVE_COINS] (state, { activeCoins }) {

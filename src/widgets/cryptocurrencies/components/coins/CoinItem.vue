@@ -3,10 +3,10 @@
     <td class="item__currency-cell">
       <div class="item__currency" :title="coin.CoinName">
         <div class="item__currency-image">
-          <img :src="coinLogoUrl" height="24">
+          <img :src="coin.LogoUrl" height="24">
         </div>
         <div class="item__currency-symbol">
-          {{ coin.Name || symbol }}
+          {{ symbol }}
         </div>
       </div>
     </td>
@@ -46,31 +46,38 @@ export default {
     },
   },
 
+  data () {
+    return {
+      coin: {}
+    }
+  },
+
   computed: {
     ...mapGetters({
       currency: 'preferredCurrency',
-      activeCoins: 'activeCoins'
+      coins: 'activeCoins',
+      prices: 'prices',
     }),
     flagUrl () {
       return require(`../../assets/img/flag_${this.currency.toLowerCase()}.svg`)
     },
-    coin () {
-      let symbol = this.symbol;
-      return this.activeCoins.find(x => x.Symbol === symbol) || {};
-    },
-    coinLogoUrl () {
-      if (this.coin) return `https://www.cryptocompare.com${this.coin.ImageUrl}`;
-      else return '';
-    },
-    startPrice () {
-      return (this.coin.prices && this.coin.prices[this.currency]) ? this.coin.prices[this.currency]['OPEN24HOUR'] : null;
-    },
     endPrice () {
-      return (this.coin.prices && this.coin.prices[this.currency]) ? this.coin.prices[this.currency]['PRICE'] : null;
+      return this.prices[this.symbol] ? this.prices[this.symbol][this.currency]['PRICE'] : null;
     },
     change () {
-      return (this.coin.prices && this.coin.prices[this.currency]) ? this.coin.prices[this.currency]['CHANGEPCT24HOUR'] / 100 : null;
+      return this.prices[this.symbol] ? this.prices[this.symbol][this.currency]['CHANGEPCT24HOUR'] / 100 : null;
     },
+  },
+
+  watch: {
+    coins (val) {
+      let symbol = this.symbol;
+      if (val.length) {
+        let coin = val.find(x => x.Symbol === symbol);
+        Object.assign(this.coin, coin);
+        this.coin.LogoUrl = `https://www.cryptocompare.com${coin.ImageUrl}`;
+      }
+    }
   },
 
   filters: {

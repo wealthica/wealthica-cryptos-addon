@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container glide">
       <div class="glide__wrapper">
-        <CoinPages />
+        <CoinPages :pages="pages" />
       </div>
 
       <div class="glide__bullets"></div>
@@ -16,6 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import * as constants from '../../constants';
 import CoinPages from './CoinPages.vue';
 import Footer from './Footer.vue';
 
@@ -24,15 +25,30 @@ import 'glidejs/dist/css/glide.core.css';
 
 export default {
   components: { CoinPages, Footer },
+
   computed: {
     ...mapGetters({
       coins: 'activeCoinSymbols'
-    })
+    }),
+    pages () {
+      return _.chunk(this.coins, constants.COINS_PER_PAGE);
+    }
   },
+
+  watch: {
+    coins (val) {
+      this.$store.dispatch('getActiveCoinPrices');
+    }
+  },
+
   created () {
-    this.$store.dispatch('initAddon')
+    this.$store.dispatch('initAddon');
+    this.$store.dispatch('getCoinsList');
   },
+
   updated () {
+    if (this.pages.length <= 1) return;
+
     this.$nextTick(() => {
       $('.glide').glide({
         type: 'carousel',

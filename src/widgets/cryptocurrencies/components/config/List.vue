@@ -21,7 +21,7 @@
 
     <div v-else class="coins__items coins__items--available">
       <AvailableItem
-        v-for="coin in coins"
+        v-for="coin in filteredCoins"
         :key="coin.Id"
         :coin="coin"
         @add="add"
@@ -42,6 +42,10 @@ export default {
       type: Array,
       required: true
     },
+    activeCoins: {
+      type: Array,
+      required: false
+    },
     isActive: {
       type: Boolean,
       required: true
@@ -56,6 +60,15 @@ export default {
     },
   },
   components: { draggable, ActiveItem, AvailableItem },
+
+  computed: {
+    filteredCoins () {
+      return this.coins.filter((x) => {
+        return this.activeCoins.indexOf(x.Symbol) === -1;
+      }).slice(0, 50);
+    }
+  },
+
   methods: {
     add (symbol) {
       this.$emit('add', symbol);

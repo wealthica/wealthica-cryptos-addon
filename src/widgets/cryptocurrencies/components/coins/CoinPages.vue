@@ -11,26 +11,15 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import * as constants from '../../constants';
 import CoinPage from './CoinPage';
 
 export default {
+  props: {
+    pages: {
+      type: Array,
+      required: true
+    },
+  },
   components: { CoinPage },
-  computed: {
-    ...mapGetters(['activeCoinSymbols']),
-    pages () {
-      return _.chunk(this.activeCoinSymbols, constants.COINS_PER_PAGE);
-    }
-  },
-
-  watch: {
-    activeCoinSymbols (val) {
-      this.$store.dispatch('getActiveCoinPrices');
-    }
-  },
-
-  created () {
-    this.$store.dispatch('getCoinsList');
-  }
 }
 </script>
