@@ -8,32 +8,34 @@ import frcaLocale from 'moment/locale/fr-ca';
 // initial state
 const state = {
   allCoins: [],
-  topCoins: [],
+  activeCoins: [],
+  activeCoinSymbols: [],
   updateTime: '',
 };
 
 // getters
 const getters = {
   allCoins: state => state.allCoins,
-  topCoins: state => state.topCoins,
+  activeCoins: state => state.activeCoins,
+  activeCoinSymbols: state => state.activeCoinSymbols,
   updateTime: state => state.updateTime,
 };
 
 // actions
 const actions = {
   getCoinsList ({ dispatch, commit, rootGetters, getters }) {
-    console.log('getCoinsList');
     return new Promise((resolve, reject) => {
       cryptoAPI.getCoinList({
         success (coins) {
-          console.log('getCoinsList success', coins);
           coins.forEach(coin => {
             coin.prices = {};
           })
 
-          // Commit so widget can display the coins right away without
-          // having to wait for exchange rates to be available.
           commit(types.RECEIVE_COINS_LIST, { coins });
+          if (getters.activeCoinSymbols.length) {
+            let activeCoins = coins.filter(x => getters.activeCoinSymbols.indexOf(x.Symbol) > -1);
+            commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
+          }
           commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
 
           resolve(coins);
@@ -45,14 +47,33 @@ const actions = {
     });
   },
 
-  getTopCoins ({ dispatch, commit, rootGetters, getters }) {
+  updateActiveCoinSymbols ({ dispatch, commit, rootGetters, getters }, symbols) {
+    let activeCoins;
+    if (symbols.length) {
+      activeCoins = getters.allCoins.filter(x => symbols.indexOf(x.Symbol) > -1);
+      commit(types.UPDATE_ACTIVE_COIN_SYMBOLS, { symbols });
+      commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
+      return;
+    }
+
+    // Defaults to 2 pages
+    activeCoins = getters.allCoins.slice(0, constants.COINS_PER_PAGE * 2);
+    symbols = activeCoins.map(x => x.Symbol);
+    commit(types.UPDATE_ACTIVE_COIN_SYMBOLS, { symbols });
+    commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
+  },
+
+  getActiveCoinPrices ({ dispatch, commit, rootGetters, getters }) {
+
     async.auto({
 
-    // Get top coins list
-    topCoins (cb) {
+    // Get all coins list
+    allCoins (cb) {
+      // Skip if allCoins are already fetched
+      if (getters.allCoins.length) return cb(null, getters.allCoins);
+
       dispatch('getCoinsList').then(() => {
-        console.log('topCoins async', getters.topCoins);
-        cb(null, getters.topCoins);
+        cb(null, getters.allCoins);
       }).catch(() => {
         cb(err);
       });
@@ -60,49 +81,55 @@ const actions = {
 
     // Get preferred currency
     preferredCurrency (cb) {
+      if (rootGetters.preferredCurrency) return cb(null, rootGetters.preferredCurrency);
+
       dispatch('getPreferredCurrency', null, { root: true }).then((currency) => {
         cb(null, currency);
       });
     },
 
-    topCoinsPrices: ['topCoins', 'preferredCurrency', (results, cb) => {
-      cryptoAPI.getCoinPrice({
-        coins: results.topCoins.map(x => x.Symbol),
-        currencies: [results.preferredCurrency],
-        success (prices) {
-          commit(types.UPDATE_TOP_COIN_PRICES, { prices });
-          commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
+    activeCoinPrices: ['allCoins', 'preferredCurrency', (results, cb) => {
+      let coinsToGet = getters.activeCoins.filter(coin => {
+        return _.isEmpty(coin.prices[results.preferredCurrency]);
+      });
 
-          cb(null, prices);
-        },
-        error (err) {
-          cb(err);
-        }
+      cryptoAPI.getCoinPrice({
+        coins: coinsToGet.map(x => x.Symbol),
+        currencies: [results.preferredCurrency],
+        success (prices) { cb(null, prices) },
+        error (err) { cb(err) }
       });
     }],
 
     }, (err, results) => {
-      if (err) commit(types.UPDATE_TOP_COIN_PRICES, { prices: [] });
+      if (err) return commit(types.UPDATE_COIN_PRICES, { prices: {} });
+
+      commit(types.UPDATE_COIN_PRICES, { prices: results.activeCoinPrices });
+      commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
     });
   }
 };
 
 // mutations
 const mutations = {
-  [types.UPDATE_TOP_COIN_PRICES] (state, { prices }) {
-    state.topCoins.forEach(coin => {
+  [types.UPDATE_COIN_PRICES] (state, { prices }) {
+    state.activeCoins.forEach(coin => {
       coin.prices = prices[coin.Symbol];
     });
+  },
+
+  [types.UPDATE_ACTIVE_COINS] (state, { activeCoins }) {
+    state.activeCoins = activeCoins;
+  },
+
+  [types.UPDATE_ACTIVE_COIN_SYMBOLS] (state, { symbols }) {
+    state.activeCoinSymbols = symbols;
   },
 
   [types.RECEIVE_COINS_LIST] (state, { coins }) {
     state.allCoins = coins.sort((a, b) => {
       return a.SortOrder - b.SortOrder;
     });
-
-    // TODO get topcoins list from widget config if available
-    let numCoins = constants.MAX_ACTIVE_COINS;
-    state.topCoins = state.allCoins.slice(0, numCoins);
   },
 
   [types.SET_UPDATE_TIME] (state, { momentLocale }) {

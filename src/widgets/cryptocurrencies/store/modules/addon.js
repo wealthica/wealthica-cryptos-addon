@@ -6,6 +6,7 @@ import _ from 'lodash';
 const state = {
   addon: null,
   addonData: {},
+  config: {},
 };
 
 // getters
@@ -18,22 +19,22 @@ const getters = {
       from: state.addonData.fromDate, to: state.addonData.toDate
     }
   },
-  config: state => state.addonData.config,
+  config: state => state.config,
 };
 
 // actions
 const actions = {
-  initAddon ({ commit }) {
+  initAddon ({ commit, dispatch, getters }) {
+    let updateData = (data) => {
+      commit(types.UPDATE_ADDON_DATA, { data: _.omit(data, ['config']) });
+      commit(types.UPDATE_CONFIG, { data: data.config });
+      dispatch('updateActiveCoinSymbols', getters.config.coins, { root: true });
+    }
+
     let addon = new WealthicaAddon({
       scope: 'wealthica/wealthica-cryptos-addon/widgets/cryptocurrencies',
-      init (data) {
-        commit(types.UPDATE_ADDON_DATA, { data: _.omit(data, ['config']) });
-        commit(types.UPDATE_CONFIG, { data: data.config });
-      },
-      update (data) {
-        commit(types.UPDATE_ADDON_DATA, { data: _.omit(data, ['config']) });
-        commit(types.UPDATE_CONFIG, { data: data.config });
-      },
+      init: updateData,
+      update: updateData,
       reload () {
         // Trigger app reload here
       },
@@ -42,12 +43,14 @@ const actions = {
     commit(types.INIT_ADDON, { addon });
   },
 
-  updateConfig ({ commit, getters }, data) {
+  updateConfig ({ commit, dispatch, getters }, data) {
     return new Promise((resolve, reject) => {
       getters.addon.saveConfig({
         data,
         success: response => {
           commit(types.UPDATE_CONFIG, { data });
+          dispatch('updateActiveCoinSymbols', getters.config.coins, { root: true });
+
           resolve(response);
         },
         error: () => {
@@ -67,7 +70,7 @@ const mutations = {
     state.addonData = data;
   },
   [types.UPDATE_CONFIG] (state, { data }) {
-    state.addonData.config = data;
+    state.config = data || {};
   },
 };
 

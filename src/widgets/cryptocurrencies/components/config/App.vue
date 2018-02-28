@@ -5,6 +5,7 @@
         :coins="activeCoins"
         :isActive="true"
         :maxReached="maxReached"
+        :minReached="minReached"
         @remove="remove"
       />
 
@@ -30,10 +31,11 @@ export default {
     return {
       activeCoins: [],
       maxReached: false,
+      minReached: false,
     }
   },
   computed: {
-    ...mapGetters(['config', 'allCoins', 'topCoins']),
+    ...mapGetters(['activeCoinSymbols', 'allCoins']),
     availableCoins () {
       // TODO remove this 50 coins limit, and find a way to display all 2000+
       // coins (pagination?)
@@ -44,19 +46,14 @@ export default {
     },
   },
   watch: {
-    config (val) {
-      console.log('watch config', val);
-      if (val.coins && val.coins.length) this.activeCoins = val.coins;
-    },
-    topCoins (val) {
-      console.log('watch topCoins', val, this.activeCoins.length);
-      // config takes priority
-      if (this.activeCoins.length) return;
-      if (val && val.length) this.activeCoins = val.map(x => x.Symbol);
+    activeCoinSymbols (val) {
+      this.activeCoins = val.slice();
     }
   },
   methods: {
     add (symbol) {
+      this.minReached = false;
+
       if (this.activeCoins.length >= constants.MAX_ACTIVE_COINS)
         return this.maxReached = true;
 
@@ -64,6 +61,10 @@ export default {
     },
     remove (symbol) {
       this.maxReached = false;
+
+      if (this.activeCoins.length <= constants.MIN_ACTIVE_COINS)
+        return this.minReached = true;
+
       this.activeCoins = this.activeCoins.filter(x => x !== symbol);
     },
     saveConfig () {

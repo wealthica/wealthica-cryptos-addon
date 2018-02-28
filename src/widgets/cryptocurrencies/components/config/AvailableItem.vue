@@ -29,13 +29,12 @@ export default {
     coinLogoUrl () {
       if (!this.coin.ImageUrl) return '';
 
-      return `https://www.cryptocompare.com${this.coin.ImageUrl}`
+      return `https://www.cryptocompare.com${this.coin.ImageUrl}`;
     }
   },
 
   methods: {
     add () {
-      console.log('add clicked', this.coin);
       this.$emit('add', this.coin.Symbol);
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="list__wrapper">
     <table class="list">
-      <thead v-if="coins.length">
+      <thead v-if="symbols.length">
         <tr>
           <th></th>
           <th class="price-header">{{ $t('price_currency', null, { currency: currency }) }}</th>
@@ -10,9 +10,9 @@
       </thead>
       <tbody>
         <CoinItem
-          v-for="coin in coins"
-          :key="coin.Id"
-          :coin="coin"
+          v-for="symbol in symbols"
+          :key="symbol"
+          :symbol="symbol"
         />
       </tbody>
     </table>
@@ -25,7 +25,7 @@ import CoinItem from './CoinItem';
 
 export default {
   props: {
-    coins: {
+    symbols: {
       type: Array,
       required: true
     },

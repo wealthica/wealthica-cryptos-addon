@@ -3,7 +3,7 @@
     <div class="coins__list-header" v-if="isActive">Active Cryptocurrencies</div>
     <div class="coins__list-header" v-else>Available Cryptocurrencies</div>
 
-    <div v-if="isActive" class="coins__list-note" :class="{error: maxReached}">Maximum 6 active cryptocurrencies.</div>
+    <div v-if="isActive" class="coins__list-note" :class="{error: maxReached || minReached}">1-15 active cryptocurrencies allowed.</div>
     <div v-else class="coins__list-note" :class="{error: maxReached}">Please remove an active cryptocurrency to create an empty spot before you can activate a new one.</div>
 
     <draggable
@@ -49,7 +49,11 @@ export default {
     maxReached: {
       type: Boolean,
       required: true
-    }
+    },
+    minReached: {
+      type: Boolean,
+      required: true
+    },
   },
   components: { draggable, ActiveItem, AvailableItem },
   methods: {
@@ -90,7 +94,8 @@ export default {
       color: $darker-text-color;
       letter-spacing: 0.21px;
       line-height: 1.2;
-      margin-bottom: 15px;
+      margin-bottom: 5px;
+      height: 65px;
 
       &.error {
         color: $red;
@@ -152,12 +157,10 @@ export default {
 
     &s {
       display: block;
-      min-height: 185px;
-
-      &--available {
-        max-height: 185px;
-        overflow-y: auto;
-      }
+      height: 225px;
+      max-height: 225px;
+      overflow-y: auto;
+      padding-right: 10px;
     }
   }
 }

@@ -6,7 +6,7 @@
           <img :src="coinLogoUrl" height="24">
         </div>
         <div class="item__currency-symbol">
-          {{ coin.Name }}
+          {{ coin.Name || symbol }}
         </div>
       </div>
     </td>
@@ -40,34 +40,36 @@ import SVGInjector from 'svg-injector';
 
 export default {
   props: {
-    coin: {
-      type: Object,
+    symbol: {
+      type: String,
       required: true
     },
   },
 
   computed: {
     ...mapGetters({
-      currency: 'preferredCurrency'
+      currency: 'preferredCurrency',
+      activeCoins: 'activeCoins'
     }),
     flagUrl () {
       return require(`../../assets/img/flag_${this.currency.toLowerCase()}.svg`)
     },
+    coin () {
+      let symbol = this.symbol;
+      return this.activeCoins.find(x => x.Symbol === symbol) || {};
+    },
     coinLogoUrl () {
-      return `https://www.cryptocompare.com${this.coin.ImageUrl}`
+      if (this.coin) return `https://www.cryptocompare.com${this.coin.ImageUrl}`;
+      else return '';
     },
     startPrice () {
-      return this.coin.prices[this.currency] ? this.coin.prices[this.currency]['OPEN24HOUR'] : null;
+      return (this.coin.prices && this.coin.prices[this.currency]) ? this.coin.prices[this.currency]['OPEN24HOUR'] : null;
     },
     endPrice () {
-      return this.coin.prices[this.currency] ? this.coin.prices[this.currency]['PRICE'] : null;
+      return (this.coin.prices && this.coin.prices[this.currency]) ? this.coin.prices[this.currency]['PRICE'] : null;
     },
     change () {
-      let result = (this.endPrice - this.startPrice) / Math.abs(this.startPrice);
-      let numDecimal = 2;
-      let roundingBase = Math.pow(10, numDecimal);
-
-      return Math.round(result * roundingBase) / roundingBase;
+      return (this.coin.prices && this.coin.prices[this.currency]) ? this.coin.prices[this.currency]['CHANGEPCT24HOUR'] / 100 : null;
     },
   },
 

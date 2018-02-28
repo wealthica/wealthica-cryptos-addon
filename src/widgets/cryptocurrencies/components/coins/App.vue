@@ -26,7 +26,7 @@ export default {
   components: { CoinPages, Footer },
   computed: {
     ...mapGetters({
-      coins: 'topCoins'
+      coins: 'activeCoinSymbols'
     })
   },
   created () {
