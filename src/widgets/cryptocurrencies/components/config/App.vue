@@ -17,7 +17,15 @@
         @add="add"
       />
     </div>
-    <div class="btn--save" :class="{'loading disabled': saving}" @click="saveConfig">Save</div>
+    <div class="footer">
+      <div class="footer__left">
+        <div class="save-status">{{ saveStatus }}</div>
+      </div>
+      <div class="footer__right">
+        <div class="btn--save" :class="{'loading disabled': saving}" @click="saveConfig">Save</div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -34,6 +42,8 @@ export default {
       maxReached: false,
       minReached: false,
       saving: false,
+      saveStatus: '',
+      statusTimer: null
     }
   },
   computed: {
@@ -63,11 +73,25 @@ export default {
     },
     saveConfig () {
       this.saving = true;
+      this.saveStatus = '';
+      clearTimeout(this.statusTimer);
       let newConfig = { coins: this.activeCoins };
+
       this.$store.dispatch('updateConfig', newConfig).then((response) => {
         this.saving = false;
-        console.log('saved', response);
+        this.saveStatus = 'Saved successfully!';
+        this.scheduleStatusReset();
+      }).catch(() => {
+        this.saving = false;
+        this.saveStatus = 'An error happened. Please try again.';
+        this.scheduleStatusReset();
       });
+    },
+    scheduleStatusReset () {
+      clearTimeout(this.statusTimer);
+      this.statusTimer = setTimeout(() => {
+        this.saveStatus = '';
+      }, 5000);
     }
   },
   created () {
@@ -188,6 +212,21 @@ body {
       border-width: 0.2em;
       box-shadow: 0px 0px 0px 1px transparent;
     }
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__left, &__right {
+    display: flex;
+    align-items: center;
+  }
+
+  &__right {
+    margin-left: 25px;
   }
 }
 
