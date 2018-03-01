@@ -63,22 +63,10 @@ const actions = {
 
   getActiveCoinPrices ({ dispatch, commit, rootGetters, getters }) {
 
-    async.auto({
-
-    // Get all coins list
-    allCoins (cb) {
-      // Skip if allCoins are already fetched
-      if (getters.allCoins.length) return cb(null, getters.allCoins);
-
-      dispatch('getCoinsList').then(() => {
-        cb(null, getters.allCoins);
-      }).catch(() => {
-        cb(err);
-      });
-    },
+    async.waterfall([
 
     // Get preferred currency
-    preferredCurrency (cb) {
+    (cb) => {
       if (rootGetters.preferredCurrency) return cb(null, rootGetters.preferredCurrency);
 
       dispatch('getPreferredCurrency', null, { root: true }).then((currency) => {
@@ -86,23 +74,23 @@ const actions = {
       });
     },
 
-    prices: ['allCoins', 'preferredCurrency', (results, cb) => {
-      let coinsToGet = getters.activeCoins.filter(coin => {
-        return _.isEmpty(getters.prices[coin.Symbol]);
+    (currency, cb) => {
+      let coinsToGet = getters.activeCoinSymbols.filter(symbol => {
+        return _.isEmpty(getters.prices[symbol]);
       });
 
       cryptoAPI.getCoinPrice({
-        coins: coinsToGet.map(x => x.Symbol),
-        currencies: [results.preferredCurrency],
+        coins: coinsToGet,
+        currencies: [currency],
         success (prices) { cb(null, prices) },
         error (err) { cb(err) }
       });
-    }],
+    },
 
-    }, (err, results) => {
+  ], (err, prices) => {
       if (err) return commit(types.UPDATE_COIN_PRICES, { prices: {} });
 
-      commit(types.UPDATE_COIN_PRICES, { prices: results.prices });
+      commit(types.UPDATE_COIN_PRICES, { prices });
       commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
     });
   }
