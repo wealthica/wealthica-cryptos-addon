@@ -4,7 +4,9 @@
     <div class="coins__list-header" v-else>Available Cryptocurrencies</div>
 
     <div v-if="isActive" class="coins__list-note" :class="{error: maxReached || minReached}">1-15 active cryptocurrencies allowed.</div>
-    <div v-else class="coins__list-note" :class="{error: maxReached}">Please remove an active cryptocurrency to create an empty spot before you can activate a new one.</div>
+    <div v-else class="coins__list-note">
+      <input type="text" class="coins__search" v-model="search" placeholder="Search by name or symbol...">
+    </div>
 
     <draggable
       v-if="isActive"
@@ -21,11 +23,14 @@
 
     <div v-else class="coins__items coins__items--available">
       <AvailableItem
+        v-if="filteredCoins.length"
         v-for="coin in filteredCoins"
         :key="coin.Id"
         :coin="coin"
         @add="add"
       />
+
+      <div v-if="!filteredCoins.length && coins.length" class="coins__search-no-result">Nothing matched.</div>
     </div>
   </div>
 </template>
@@ -59,13 +64,34 @@ export default {
       required: true
     },
   },
+
+  data () {
+    return {
+      search: '',
+    }
+  },
+
   components: { draggable, ActiveItem, AvailableItem },
 
   computed: {
     filteredCoins () {
-      return this.coins.filter((x) => {
-        return this.activeCoins.indexOf(x.Symbol) === -1;
-      }).slice(0, 50);
+      let filteredCoins;
+      let search = this.search;
+
+      filteredCoins = this.coins.filter((x) => {
+        let isInactive = this.activeCoins.indexOf(x.Symbol) === -1;
+        let matched = true;
+        if (search && search.length) {
+          search = search.toLowerCase();
+          matched = x.CoinName.toLowerCase().indexOf(search) > -1 ||
+            x.Symbol.toLowerCase().indexOf(search) > -1;
+        }
+
+        return matched && isInactive;
+      });
+
+      // show max 50 results
+      return filteredCoins.slice(0, 50);
     }
   },
 
@@ -88,7 +114,7 @@ export default {
 .coins {
   &__list {
     margin-bottom: 20px;
-    width: calc(100%/2 - 25px);
+    width: calc((100% - 25px)/2);
 
     &--available {
       margin-left: 25px;
@@ -108,7 +134,7 @@ export default {
       letter-spacing: 0.21px;
       line-height: 1.2;
       margin-bottom: 5px;
-      height: 65px;
+      height: 45px;
 
       &.error {
         color: $red;
@@ -150,6 +176,7 @@ export default {
 
     &-title {
       flex-grow: 1 !important;
+      width: 0;
     }
 
     &-name {
@@ -174,6 +201,33 @@ export default {
       max-height: 225px;
       overflow-y: auto;
       padding-right: 10px;
+    }
+  }
+
+  &__search {
+    padding-left: 10px;
+    padding-right: 10px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    height: 36px;
+    line-height: 36px;
+    font-size: 0.9333rem;
+    text-transform: none;
+    border: 1px solid $border-color;
+    background-color: white;
+    color: $dark-text-color;
+    outline: 0;
+    border-radius: 3px;
+
+    @include placeholder() {
+      color: $light-text-color !important;
+      font-weight: normal !important;
+    }
+
+    &-no-result {
+      font-size: 0.9333rem;
+      color: $darker-text-color;
     }
   }
 }
