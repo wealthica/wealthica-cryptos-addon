@@ -1,11 +1,11 @@
 <template>
   <div class="coins__list" :class="{'coins__list--available': !isActive}">
-    <div class="coins__list-header" v-if="isActive">Active Cryptocurrencies</div>
-    <div class="coins__list-header" v-else>Available Cryptocurrencies</div>
+    <div class="coins__list-header" v-if="isActive">{{ $t('active_cryptocurrencies') }}</div>
+    <div class="coins__list-header" v-else>{{ $t('available_cryptocurrencies') }}</div>
 
-    <div v-if="isActive" class="coins__list-note" :class="{error: maxReached || minReached}">1-15 active cryptocurrencies allowed.</div>
+    <div v-if="isActive" class="coins__list-note" :class="{error: maxReached || minReached}">{{ $t('num_active_cryptocurrencies_allowed', null, { min: minActiveCoins, max: maxActiveCoins }) }}</div>
     <div v-else class="coins__list-note">
-      <input type="text" class="coins__search" v-model="search" placeholder="Search by name or symbol...">
+      <input type="text" class="coins__search" v-model="search" :placeholder="$t('search_placeholder')">
     </div>
 
     <draggable
@@ -30,7 +30,7 @@
         @add="add"
       />
 
-      <div v-if="!filteredCoins.length && coins.length" class="coins__search-no-result">Nothing matched.</div>
+      <div v-if="!filteredCoins.length && coins.length" class="coins__search-no-result">{{ $t('nothing_matched') }}</div>
     </div>
   </div>
 </template>
@@ -38,6 +38,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import draggable from 'vuedraggable';
+import * as constants from '../../constants';
 import ActiveItem from './ActiveItem';
 import AvailableItem from './AvailableItem';
 
@@ -92,7 +93,9 @@ export default {
 
       // show max 50 results
       return filteredCoins.slice(0, 50);
-    }
+    },
+    minActiveCoins () { return constants.MIN_ACTIVE_COINS },
+    maxActiveCoins () { return constants.MIN_ACTIVE_COINS },
   },
 
   methods: {

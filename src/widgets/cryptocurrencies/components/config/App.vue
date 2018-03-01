@@ -22,7 +22,7 @@
         <div class="save-status">{{ saveStatus }}</div>
       </div>
       <div class="footer__right">
-        <div class="btn--save" :class="{'loading disabled': saving}" @click="saveConfig">Save</div>
+        <div class="btn--save" :class="{'loading disabled': saving}" @click="saveConfig">{{ $t('save') }}</div>
       </div>
     </div>
 
@@ -79,11 +79,11 @@ export default {
 
       this.$store.dispatch('updateConfig', newConfig).then((response) => {
         this.saving = false;
-        this.saveStatus = 'Saved successfully!';
+        this.saveStatus = this.$t('saved_successfully');
         this.scheduleStatusReset();
       }).catch(() => {
         this.saving = false;
-        this.saveStatus = 'An error happened. Please try again.';
+        this.saveStatus = this.$t('error_happened');
         this.scheduleStatusReset();
       });
     },
