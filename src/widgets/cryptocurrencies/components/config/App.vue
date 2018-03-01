@@ -75,9 +75,9 @@ export default {
       this.saving = true;
       this.saveStatus = '';
       clearTimeout(this.statusTimer);
-      let newConfig = { coins: this.activeCoins };
+      let newData = { coins: this.activeCoins };
 
-      this.$store.dispatch('updateConfig', newConfig).then((response) => {
+      this.$store.dispatch('updateData', newData).then((response) => {
         this.saving = false;
         this.saveStatus = this.$t('saved_successfully');
         this.scheduleStatusReset();

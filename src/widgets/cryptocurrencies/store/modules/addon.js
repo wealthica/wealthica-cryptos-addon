@@ -5,30 +5,30 @@ import _ from 'lodash';
 // initial state
 const state = {
   addon: null,
-  addonData: {},
-  config: {},
+  addonStore: {},
+  data: {},
 };
 
 // getters
 const getters = {
   addon: state => state.addon,
-  language: state => state.addonData.language,
+  language: state => state.addonStore.language,
   momentLocale: (state, getters) => (getters.language === 'fr') ? 'fr-ca' : getters.language,
   dateFilter: state => {
     return {
-      from: state.addonData.fromDate, to: state.addonData.toDate
+      from: state.addonStore.fromDate, to: state.addonStore.toDate
     }
   },
-  config: state => state.config,
+  data: state => state.data,
 };
 
 // actions
 const actions = {
   initAddon ({ commit, dispatch, getters }) {
     let updateData = (data) => {
-      commit(types.UPDATE_ADDON_DATA, { data: _.omit(data, ['config']) });
-      commit(types.UPDATE_CONFIG, { data: data.config });
-      dispatch('updateActiveCoinSymbols', getters.config.coins, { root: true });
+      commit(types.UPDATE_ADDON_STORE, { data: _.omit(data, ['data']) });
+      commit(types.UPDATE_DATA, { data: data.data });
+      dispatch('updateActiveCoinSymbols', getters.data.coins, { root: true });
     }
 
     let addon = new WealthicaAddon({
@@ -43,13 +43,13 @@ const actions = {
     commit(types.INIT_ADDON, { addon });
   },
 
-  updateConfig ({ commit, dispatch, getters }, data) {
+  updateData ({ commit, dispatch, getters }, data) {
     return new Promise((resolve, reject) => {
-      getters.addon.saveConfig({
+      getters.addon.saveData({
         data,
         success: response => {
-          commit(types.UPDATE_CONFIG, { data });
-          dispatch('updateActiveCoinSymbols', getters.config.coins, { root: true });
+          commit(types.UPDATE_DATA, { data });
+          dispatch('updateActiveCoinSymbols', getters.data.coins, { root: true });
 
           resolve(response);
         },
@@ -66,11 +66,11 @@ const mutations = {
   [types.INIT_ADDON] (state, { addon }) {
     state.addon = addon;
   },
-  [types.UPDATE_ADDON_DATA] (state, { data }) {
-    state.addonData = data;
+  [types.UPDATE_ADDON_STORE] (state, { data }) {
+    state.addonStore = data;
   },
-  [types.UPDATE_CONFIG] (state, { data }) {
-    state.config = data || {};
+  [types.UPDATE_DATA] (state, { data }) {
+    state.data = data || {};
   },
 };
 
