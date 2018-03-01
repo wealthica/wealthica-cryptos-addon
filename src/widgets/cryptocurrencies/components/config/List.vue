@@ -95,7 +95,7 @@ export default {
       return filteredCoins.slice(0, 50);
     },
     minActiveCoins () { return constants.MIN_ACTIVE_COINS },
-    maxActiveCoins () { return constants.MIN_ACTIVE_COINS },
+    maxActiveCoins () { return constants.MAX_ACTIVE_COINS },
   },
 
   methods: {
