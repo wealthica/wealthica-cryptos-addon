@@ -1,5 +1,5 @@
 {
-  "name": "wealthica-cryptos-core",
+  "name": "wealthica-cryptos-addon",
   "version": "1.0.0",
   "description": "Wealthica Cryptos Addon",
   "main": "src/index.js",
