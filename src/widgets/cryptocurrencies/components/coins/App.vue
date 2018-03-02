@@ -37,7 +37,7 @@ export default {
 
   watch: {
     coins (val) {
-      this.$store.dispatch('getActiveCoinPrices');
+      if (val.length) this.$store.dispatch('getActiveCoinPrices');
     }
   },
 

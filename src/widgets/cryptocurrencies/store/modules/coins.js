@@ -30,11 +30,14 @@ const actions = {
       cryptoAPI.getCoinList({
         success (coins) {
           commit(types.RECEIVE_COINS_LIST, { coins });
+          commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
+
           if (getters.activeCoinSymbols.length) {
             let activeCoins = coins.filter(x => getters.activeCoinSymbols.indexOf(x.Symbol) > -1);
             commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
+          } else {
+            dispatch('setDefaultActiveCoins');
           }
-          commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
 
           resolve(coins);
         },
@@ -45,24 +48,24 @@ const actions = {
     });
   },
 
-  updateActiveCoinSymbols ({ dispatch, commit, rootGetters, getters }, symbols) {
+  updateActiveCoinSymbols ({ dispatch, commit, rootGetters, getters }, symbols=[]) {
     let activeCoins;
-    if (symbols.length) {
-      activeCoins = getters.allCoins.filter(x => symbols.indexOf(x.Symbol) > -1);
-      commit(types.UPDATE_ACTIVE_COIN_SYMBOLS, { symbols });
-      commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
-      return;
-    }
+    if (!symbols.length) return dispatch('setDefaultActiveCoins');
 
+    activeCoins = getters.allCoins.filter(x => symbols.indexOf(x.Symbol) > -1);
+    commit(types.UPDATE_ACTIVE_COIN_SYMBOLS, { symbols });
+    commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
+  },
+
+  setDefaultActiveCoins ({ commit, getters }) {
     // Defaults to 2 pages
-    activeCoins = getters.allCoins.slice(0, constants.COINS_PER_PAGE * 2);
-    symbols = activeCoins.map(x => x.Symbol);
+    let activeCoins = getters.allCoins.slice(0, constants.COINS_PER_PAGE * 2);
+    let symbols = activeCoins.map(x => x.Symbol);
     commit(types.UPDATE_ACTIVE_COIN_SYMBOLS, { symbols });
     commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
   },
 
   getActiveCoinPrices ({ dispatch, commit, rootGetters, getters }) {
-
     async.waterfall([
 
     // Get preferred currency

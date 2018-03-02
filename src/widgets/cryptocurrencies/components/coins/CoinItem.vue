@@ -71,12 +71,7 @@ export default {
 
   watch: {
     coins (val) {
-      let symbol = this.symbol;
-      if (val.length) {
-        let coin = val.find(x => x.Symbol === symbol);
-        Object.assign(this.coin, coin);
-        this.coin.LogoUrl = `https://www.cryptocompare.com${coin.ImageUrl}`;
-      }
+      this.updateCoin(val);
     }
   },
 
@@ -92,9 +87,23 @@ export default {
   },
 
   methods: {
+    updateCoin (coins=[]) {
+      let symbol = this.symbol;
+      if (coins.length) {
+        console.log('assigningcoin');
+        let coin = coins.find(x => x.Symbol === symbol);
+        coin.LogoUrl = `https://www.cryptocompare.com${coin.ImageUrl}`;
+        this.coin = _.extend({}, this.coin, coin);
+        console.log('assigningcoin', this.coin);
+      }
+    },
     injectSVG () {
       SVGInjector(this.$el.getElementsByClassName('item__change-icon-image'));
     }
+  },
+
+  created () {
+    this.updateCoin(this.coins);
   },
 
   updated () {
