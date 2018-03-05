@@ -3,10 +3,10 @@
     <td class="item__currency-cell">
       <div class="item__currency" :title="coin.CoinName">
         <div class="item__currency-image">
-          <img :src="coinLogoUrl" height="24">
+          <img :src="coin.LogoUrl" height="24">
         </div>
         <div class="item__currency-symbol">
-          {{ coin.Name }}
+          {{ symbol }}
         </div>
       </div>
     </td>
@@ -25,7 +25,7 @@
           up: change && change > 0,
           down: change && change < 0
         }">
-          <img src="../assets/img/arrow.svg" height="5" class="item__change-icon-image">
+          <img src="../../assets/img/arrow.svg" height="5" class="item__change-icon-image">
         </div>
         <div class="item__change-number">{{ change | formatChangePercent }}</div>
       </div>
@@ -40,35 +40,39 @@ import SVGInjector from 'svg-injector';
 
 export default {
   props: {
-    coin: {
-      type: Object,
+    symbol: {
+      type: String,
       required: true
     },
   },
 
+  data () {
+    return {
+      coin: {}
+    }
+  },
+
   computed: {
     ...mapGetters({
-      currency: 'preferredCurrency'
+      currency: 'preferredCurrency',
+      coins: 'activeCoins',
+      prices: 'prices',
     }),
     flagUrl () {
-      return require(`../assets/img/flag_${this.currency.toLowerCase()}.svg`)
-    },
-    coinLogoUrl () {
-      return `https://www.cryptocompare.com${this.coin.ImageUrl}`
-    },
-    startPrice () {
-      return this.coin.prices[this.currency] ? this.coin.prices[this.currency]['OPEN24HOUR'] : null;
+      return require(`../../assets/img/flag_${this.currency.toLowerCase()}.svg`)
     },
     endPrice () {
-      return this.coin.prices[this.currency] ? this.coin.prices[this.currency]['PRICE'] : null;
+      return this.prices[this.symbol] ? this.prices[this.symbol][this.currency]['PRICE'] : null;
     },
     change () {
-      let result = (this.endPrice - this.startPrice) / Math.abs(this.startPrice);
-      let numDecimal = 2;
-      let roundingBase = Math.pow(10, numDecimal);
-
-      return Math.round(result * roundingBase) / roundingBase;
+      return this.prices[this.symbol] ? this.prices[this.symbol][this.currency]['CHANGEPCT24HOUR'] / 100 : null;
     },
+  },
+
+  watch: {
+    coins (val) {
+      this.updateCoin(val);
+    }
   },
 
   filters: {
@@ -83,19 +87,33 @@ export default {
   },
 
   methods: {
-    injectSVG() {
+    updateCoin (coins=[]) {
+      let symbol = this.symbol;
+      if (coins.length) {
+        console.log('assigningcoin');
+        let coin = coins.find(x => x.Symbol === symbol);
+        coin.LogoUrl = `https://www.cryptocompare.com${coin.ImageUrl}`;
+        this.coin = _.extend({}, this.coin, coin);
+        console.log('assigningcoin', this.coin);
+      }
+    },
+    injectSVG () {
       SVGInjector(this.$el.getElementsByClassName('item__change-icon-image'));
     }
   },
 
-  updated() {
+  created () {
+    this.updateCoin(this.coins);
+  },
+
+  updated () {
     this.injectSVG();
   }
 }
 </script>
 
 <style lang="scss">
-@import '../variables.scss';
+@import '../../styles/variables.scss';
 @import 'breakpoint-sass/stylesheets/breakpoint';
 
 .item {

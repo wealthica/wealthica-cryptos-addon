@@ -14,7 +14,7 @@ This project uses [`yarn`](https://yarnpkg.com/en/docs/install) for dependency m
 
 ### Build
 
-`yarn build` (or `npm run-script build`)
+`yarn build` (or `npm run build`)
 
 Build result will show up under `dist/`
 

@@ -3,7 +3,7 @@
     <div v-for="(page, index) in pages" class="glide__slide">
       <CoinPage
         :key="index"
-        :coins="page"
+        :symbols="page"
       />
     </div>
   </div>
@@ -13,21 +13,13 @@
 import { mapGetters } from 'vuex';
 import CoinPage from './CoinPage';
 
-const NUM_COINS = 6;
-const PER_PAGE = 3;
-
 export default {
-  components: { CoinPage },
-  computed: {
-    ...mapGetters({
-      coins: 'topCoins',
-    }),
-    pages () {
-      return _.chunk(this.coins, PER_PAGE);
-    }
+  props: {
+    pages: {
+      type: Array,
+      required: true
+    },
   },
-  created () {
-    this.$store.dispatch('getTopCoins', NUM_COINS);
-  }
+  components: { CoinPage },
 }
 </script>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="7px" viewBox="0 0 14 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>pan</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Add-Ons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-Copy" transform="translate(-901.000000, -393.000000)" fill="#C4CAE4">
+            <g id="panel" transform="translate(495.000000, 235.000000)">
+                <g id="Active-Widgets" transform="translate(20.000000, 150.000000)">
+                    <path d="M386.5,14 L399.5,14 C399.776142,14 400,14.2238576 400,14.5 C400,14.7761424 399.776142,15 399.5,15 L386.5,15 C386.223858,15 386,14.7761424 386,14.5 C386,14.2238576 386.223858,14 386.5,14 Z M386.5,11 L399.5,11 C399.776142,11 400,11.2238576 400,11.5 C400,11.7761424 399.776142,12 399.5,12 L386.5,12 C386.223858,12 386,11.7761424 386,11.5 C386,11.2238576 386.223858,11 386.5,11 Z M386.5,8 L399.5,8 C399.776142,8 400,8.22385763 400,8.5 C400,8.77614237 399.776142,9 399.5,9 L386.5,9 C386.223858,9 386,8.77614237 386,8.5 C386,8.22385763 386.223858,8 386.5,8 Z" id="pan"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
