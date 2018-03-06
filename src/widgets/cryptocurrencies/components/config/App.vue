@@ -51,7 +51,6 @@ export default {
   },
   watch: {
     activeCoinSymbols (val) {
-      console.log('watch activeCoinSymbols', val);
       this.activeCoins = val.slice();
     }
   },
@@ -78,14 +77,12 @@ export default {
       this.saveStatus = '';
       clearTimeout(this.statusTimer);
       let newData = { coins: this.activeCoins };
-      console.log('saving', newData);
+
       this.$store.dispatch('updateData', newData).then((response) => {
-        console.log('saving done', response);
         this.saving = false;
         this.saveStatus = this.$t('saved_successfully');
         this.scheduleStatusReset();
       }).catch(() => {
-        console.log('saving failed');
         this.saving = false;
         this.saveStatus = this.$t('error_happened');
         this.scheduleStatusReset();
