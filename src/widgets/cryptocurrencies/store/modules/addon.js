@@ -36,14 +36,14 @@ const actions = {
     commit(types.INIT_ADDON, { addon });
   },
 
-  updateData ({ commit, dispatch, getters, state }, data) {
+  updateData ({ commit, dispatch, getters, state }, data={}) {
     return new Promise((resolve, reject) => {
       getters.addon.saveData({
         data,
         success: response => {
           let newData = _.extend({}, state.addonData, { data });
           commit(types.UPDATE_ADDON_DATA, newData);
-          dispatch('updateActiveCoinSymbols', getters.data.coins, { root: true });
+          dispatch('updateActiveCoinSymbols', data.coins, { root: true });
 
           resolve(response);
         },
