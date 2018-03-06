@@ -90,11 +90,9 @@ export default {
     updateCoin (coins=[]) {
       let symbol = this.symbol;
       if (coins.length) {
-        console.log('assigningcoin');
         let coin = coins.find(x => x.Symbol === symbol);
         coin.LogoUrl = `https://www.cryptocompare.com${coin.ImageUrl}`;
         this.coin = _.extend({}, this.coin, coin);
-        console.log('assigningcoin', this.coin);
       }
     },
     injectSVG () {

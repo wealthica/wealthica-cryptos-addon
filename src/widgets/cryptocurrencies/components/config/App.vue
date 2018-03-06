@@ -72,6 +72,7 @@ export default {
       this.activeCoins = this.activeCoins.filter(x => x !== symbol);
     },
     saveConfig () {
+
       this.saving = true;
       this.saveStatus = '';
       clearTimeout(this.statusTimer);
