@@ -25,13 +25,10 @@ const actions = {
     }
 
     let addon = new WealthicaAddon({
-      scope: 'wealthica/wealthica-cryptos-addon/widgets/cryptocurrencies',
-      init: updateData,
-      update: updateData,
-      reload () {
-        // Trigger app reload here
-      },
+      scope: 'wealthica/wealthica-cryptos-addon/widgets/cryptocurrencies'
     });
+
+    addon.on('init', updateData).on('update', updateData);
 
     commit(types.INIT_ADDON, { addon });
   },
