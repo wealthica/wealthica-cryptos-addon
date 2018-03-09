@@ -1,4 +1,4 @@
-import { WealthicaAddon } from '../../../../../src/common/wealthica-addon';
+import { Addon } from '../../../../../src/common/addon';
 import * as types from '../mutation-types';
 import _ from 'lodash';
 
@@ -25,7 +25,7 @@ const actions = {
       dispatch('updateActiveCoinSymbols', getters.data.coins, { root: true });
     }
 
-    let addon = new WealthicaAddon({
+    let addon = new Addon({
       scope: 'wealthica/wealthica-cryptos-addon/widgets/cryptocurrencies'
     });
 
