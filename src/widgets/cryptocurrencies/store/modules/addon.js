@@ -40,7 +40,7 @@ const actions = {
         data,
         success: response => {
           let newData = _.merge({}, state.addonData, { data });
-          commit(types.UPDATE_ADDON_DATA, newData);
+          commit(types.UPDATE_ADDON_DATA, { data: newData });
           dispatch('updateActiveCoinSymbols', data.coins, { root: true });
 
           resolve(response);
