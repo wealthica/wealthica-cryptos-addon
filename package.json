@@ -29,6 +29,7 @@
     "copy-webpack-plugin": "4.3.1",
     "css-loader": "0.28.7",
     "cssnano": "3.10.0",
+    "es6-promise": "4.2.4",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.6",
     "glidejs": "2.1.0",

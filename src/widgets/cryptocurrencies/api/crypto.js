@@ -1,16 +1,21 @@
 import axios from 'axios';
 import async from 'async';
+import { Promise } from 'es6-promise';
 
 export default {
-  getCoinList ({ success, error }) {
-    axios.get('https://min-api.cryptocompare.com/data/all/coinlist')
-      .then(response => success(Object.values(response.data.Data)))
-      .catch(err => error(err));
+  getCoinList () {
+    return new Promise((resolve, reject) => {
+      axios.get('https://min-api.cryptocompare.com/data/all/coinlist')
+        .then(response => resolve(Object.values(response.data.Data)))
+        .catch(err => reject(err));
+    });
   },
 
-  getCoinPrice ({ coins, currencies, success, error }) {
-    axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coins.join(',')}&tsyms=${currencies.join(',')}`)
-      .then(response => success(response.data['RAW']))
-      .catch(err => error(err));
+  getCoinPrice ({ coins, currencies }) {
+    return new Promise((resolve, reject) => {
+      axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coins.join(',')}&tsyms=${currencies.join(',')}`)
+        .then(response => resolve(response.data['RAW']))
+        .catch(err => reject(err));
+    });
   }
 }

@@ -1,3 +1,5 @@
+import { Promise } from 'es6-promise';
+
 import currenciesAPI from '../../api/currencies';
 import * as types from '../mutation-types';
 
@@ -15,11 +17,9 @@ const getters = {
 const actions = {
   getPreferredCurrency ({ commit, rootGetters }) {
     return new Promise((resolve, reject) => {
-      currenciesAPI.getPreferredCurrency(rootGetters.addon, {
-        success(currency) {
-          commit(types.RECEIVE_PREFERRED_CURRENCY, { currency: currency });
-          resolve(currency);
-        }
+      currenciesAPI.getPreferredCurrency(rootGetters.addon).then(currency => {
+        commit(types.RECEIVE_PREFERRED_CURRENCY, { currency: currency });
+        resolve(currency);
       });
     });
   }

@@ -1,9 +1,11 @@
-import cryptoAPI from '../../api/crypto';
-import * as types from '../mutation-types';
-import * as constants from '../../constants';
+import { Promise } from 'es6-promise';
 import async from 'async';
 import moment from 'moment';
 import frcaLocale from 'moment/locale/fr-ca';
+
+import cryptoAPI from '../../api/crypto';
+import * as types from '../mutation-types';
+import * as constants from '../../constants';
 
 // initial state
 const state = {
@@ -27,24 +29,19 @@ const getters = {
 const actions = {
   getCoinsList ({ dispatch, commit, rootGetters, getters }) {
     return new Promise((resolve, reject) => {
-      cryptoAPI.getCoinList({
-        success (coins) {
-          commit(types.RECEIVE_COINS_LIST, { coins });
-          commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
+      cryptoAPI.getCoinList().then(coins => {
+        commit(types.RECEIVE_COINS_LIST, { coins });
+        commit(types.SET_UPDATE_TIME, { momentLocale: rootGetters.momentLocale });
 
-          if (getters.activeCoinSymbols.length) {
-            let activeCoins = coins.filter(x => getters.activeCoinSymbols.indexOf(x.Symbol) > -1);
-            commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
-          } else {
-            dispatch('setDefaultActiveCoins');
-          }
-
-          resolve(coins);
-        },
-        error (err) {
-          reject(err);
+        if (getters.activeCoinSymbols.length) {
+          let activeCoins = coins.filter(x => getters.activeCoinSymbols.indexOf(x.Symbol) > -1);
+          commit(types.UPDATE_ACTIVE_COINS, { activeCoins });
+        } else {
+          dispatch('setDefaultActiveCoins');
         }
-      });
+
+        resolve(coins);
+      }).catch(err => reject(err));
     });
   },
 
@@ -84,10 +81,8 @@ const actions = {
 
       cryptoAPI.getCoinPrice({
         coins: coinsToGet,
-        currencies: [currency],
-        success (prices) { cb(null, prices) },
-        error (err) { cb(err) }
-      });
+        currencies: [currency]
+      }).then(prices => cb(null, prices)).catch(err => cb(err));
     },
 
   ], (err, prices) => {
