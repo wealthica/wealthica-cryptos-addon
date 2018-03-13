@@ -18,9 +18,10 @@ const getters = {
 
 // actions
 const actions = {
-  initAddon ({ commit, dispatch, getters }) {
+  initAddon ({ commit, dispatch, getters, state }) {
     let updateData = (data) => {
-      commit(types.UPDATE_ADDON_DATA, { data });
+      let newData = _.merge({}, state.addonData, data);
+      commit(types.UPDATE_ADDON_DATA, { data: newData });
       dispatch('updateActiveCoinSymbols', getters.data.coins, { root: true });
     }
 
@@ -38,8 +39,8 @@ const actions = {
       getters.addon.saveData({
         data,
         success: response => {
-          let newData = _.extend({}, state.addonData, { data });
-          commit(types.UPDATE_ADDON_DATA, newData);
+          let newData = _.merge({}, state.addonData, { data });
+          commit(types.UPDATE_ADDON_DATA, { data: newData });
           dispatch('updateActiveCoinSymbols', data.coins, { root: true });
 
           resolve(response);
