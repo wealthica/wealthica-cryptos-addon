@@ -8,6 +8,5 @@ export default {
   search_placeholder: 'Search by name or symbol...',
   nothing_matched: 'Nothing matched.',
   save: 'Save',
-  saved_successfully: 'Saved successfully!',
   error_happened: 'An error happened. Please try again.',
 }
