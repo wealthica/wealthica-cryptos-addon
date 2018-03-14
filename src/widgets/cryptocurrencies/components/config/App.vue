@@ -72,7 +72,6 @@ export default {
       this.activeCoins = this.activeCoins.filter(x => x !== symbol);
     },
     saveConfig () {
-
       this.saving = true;
       this.saveStatus = '';
       clearTimeout(this.statusTimer);
@@ -80,8 +79,6 @@ export default {
 
       this.$store.dispatch('updateData', newData).then((response) => {
         this.saving = false;
-        this.saveStatus = this.$t('saved_successfully');
-        this.scheduleStatusReset();
       }).catch(() => {
         this.saving = false;
         this.saveStatus = this.$t('error_happened');
