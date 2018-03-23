@@ -11,7 +11,7 @@
   "author": "Wealthica Financial Technology Inc. <hello@wealthica.com> (https://wealthica.com/)",
   "license": "MIT",
   "devDependencies": {
-    "@wealthica/wealthica.js": "0.0.2",
+    "@wealthica/wealthica.js": "0.0.3",
     "async": "2.6.0",
     "autoprefixer": "7.2.4",
     "axios": "0.17.1",

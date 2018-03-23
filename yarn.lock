@@ -55,9 +55,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@wealthica/wealthica.js@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@wealthica/wealthica.js/-/wealthica.js-0.0.2.tgz#f119ae317af796799e6d08eddc5be6021ffcff37"
+"@wealthica/wealthica.js@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@wealthica/wealthica.js/-/wealthica.js-0.0.3.tgz#17670237c4b7e3d5b9831aadf5a3d7c83a2b334c"
   dependencies:
     es6-promise "4.2.2"
     eventemitter3 "3.0.0"
