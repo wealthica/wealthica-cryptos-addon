@@ -1,7 +1,7 @@
 import { Promise } from 'es6-promise';
 import _ from 'lodash';
 
-import { Addon } from '../../../../../src/common/addon';
+import { Addon } from '@wealthica/wealthica.js';
 import * as types from '../mutation-types';
 
 // initial state
