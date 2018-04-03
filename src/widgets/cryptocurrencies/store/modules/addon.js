@@ -1,54 +1,49 @@
-import { WealthicaAddon } from '../../../../../src/common/wealthica-addon';
-import * as types from '../mutation-types';
+import { Promise } from 'es6-promise';
 import _ from 'lodash';
+
+import { Addon } from '@wealthica/wealthica.js';
+import * as types from '../mutation-types';
 
 // initial state
 const state = {
   addon: null,
-  addonData: {},
+  addonOptions: {},
 };
 
 // getters
 const getters = {
   addon: state => state.addon,
-  language: state => state.addonData.language || 'en',
+  language: state => state.addonOptions.language || 'en',
   momentLocale: (state, getters) => (getters.language === 'fr') ? 'fr-ca' : getters.language,
-  data: state => state.addonData.data || {},
+  data: state => state.addonOptions.data || {},
 };
 
 // actions
 const actions = {
   initAddon ({ commit, dispatch, getters, state }) {
-    let updateData = (data) => {
-      let newData = _.merge({}, state.addonData, data);
-      commit(types.UPDATE_ADDON_DATA, { data: newData });
+    let updateOptions = (options) => {
+      let newOptions = _.merge({}, state.addonOptions, options);
+      commit(types.UPDATE_ADDON_OPTIONS, { data: newOptions });
       dispatch('updateActiveCoinSymbols', getters.data.coins, { root: true });
     }
 
-    let addon = new WealthicaAddon({
+    let addon = new Addon({
       scope: 'wealthica/wealthica-cryptos-addon/widgets/cryptocurrencies'
     });
 
-    addon.on('init', updateData).on('update', updateData);
+    addon.on('init', updateOptions).on('update', updateOptions);
 
     commit(types.INIT_ADDON, { addon });
   },
 
   updateData ({ commit, dispatch, getters, state }, data={}) {
     return new Promise((resolve, reject) => {
-      getters.addon.saveData({
-        data,
-        success: response => {
-          let newData = _.merge({}, state.addonData, { data });
-          commit(types.UPDATE_ADDON_DATA, { data: newData });
-          dispatch('updateActiveCoinSymbols', data.coins, { root: true });
-
-          resolve(response);
-        },
-        error: () => {
-          reject();
-        }
-      });
+      getters.addon.saveData(data).then(response => {
+        let newOptions = _.merge({}, state.addonOptions, { data });
+        commit(types.UPDATE_ADDON_OPTIONS, newOptions);
+        dispatch('updateActiveCoinSymbols', data.coins, { root: true });
+        resolve(response);
+      }).catch(err => reject(err));
     });
   },
 };
@@ -58,8 +53,8 @@ const mutations = {
   [types.INIT_ADDON] (state, { addon }) {
     state.addon = addon;
   },
-  [types.UPDATE_ADDON_DATA] (state, { data }) {
-    state.addonData = data;
+  [types.UPDATE_ADDON_OPTIONS] (state, { data }) {
+    state.addonOptions = data;
   },
 };
 
