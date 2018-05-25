@@ -1,6 +1,5 @@
 import { Promise } from 'es6-promise';
 
-import currenciesAPI from '../../api/currencies';
 import * as types from '../mutation-types';
 
 // initial state
@@ -17,10 +16,17 @@ const getters = {
 const actions = {
   getPreferredCurrency ({ commit, rootGetters }) {
     return new Promise((resolve, reject) => {
-      currenciesAPI.getPreferredCurrency(rootGetters.addon).then(currency => {
+      let storeCurrency = (currency) => {
         commit(types.RECEIVE_PREFERRED_CURRENCY, { currency: currency });
         resolve(currency);
-      });
+      }
+
+      rootGetters.addon.api.getCurrencies().then(currencies => {
+        let preferred = currencies.find(x => x.preferred);
+        storeCurrency(preferred._id.toUpperCase());
+      }).catch(() => {
+        storeCurrency('CAD');
+      })
     });
   }
 };

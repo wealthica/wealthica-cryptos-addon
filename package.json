@@ -11,7 +11,7 @@
   "author": "Wealthica Financial Technology Inc. <hello@wealthica.com> (https://wealthica.com/)",
   "license": "MIT",
   "dependencies": {
-    "@wealthica/wealthica.js": "~0.0.3",
+    "@wealthica/wealthica.js": "0.0.7",
     "async": "~2.6.0",
     "autoprefixer": "~7.2.4",
     "axios": "~0.17.1",
@@ -61,7 +61,7 @@
     "webpack-merge": "~4.1.1"
   },
   "engines": {
-    "node": "9.x",
+    "node": "8.x",
     "npm": "5.x"
   },
   "babel": {
