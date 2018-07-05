@@ -1,5 +1,4 @@
-import { Promise } from 'es6-promise';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 import { Addon } from '@wealthica/wealthica.js';
 import * as types from '../mutation-types';

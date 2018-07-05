@@ -1,6 +1,5 @@
 import axios from 'axios';
 import async from 'async';
-import { Promise } from 'es6-promise';
 
 export default {
   getCoinList () {
