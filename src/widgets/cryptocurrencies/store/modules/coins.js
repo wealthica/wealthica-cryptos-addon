@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import async from 'async';
 import moment from 'moment';
 import frcaLocale from 'moment/locale/fr-ca';

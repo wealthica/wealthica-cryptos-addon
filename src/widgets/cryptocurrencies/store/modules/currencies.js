@@ -1,5 +1,3 @@
-import { Promise } from 'es6-promise';
-
 import * as types from '../mutation-types';
 
 // initial state
