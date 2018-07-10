@@ -37,6 +37,7 @@
 import { mapGetters } from 'vuex';
 import numeral from 'numeral';
 import SVGInjector from 'svg-injector';
+import * as _ from 'lodash';
 
 export default {
   props: {

@@ -1,5 +1,6 @@
 import async from 'async';
 import moment from 'moment';
+import * as _ from 'lodash';
 import frcaLocale from 'moment/locale/fr-ca';
 
 import cryptoAPI from '../../api/crypto';

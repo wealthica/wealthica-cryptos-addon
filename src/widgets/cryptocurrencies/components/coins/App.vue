@@ -19,6 +19,7 @@ import { mapGetters } from 'vuex';
 import * as constants from '../../constants';
 import CoinPages from './CoinPages.vue';
 import Footer from './Footer.vue';
+import * as _ from 'lodash';
 
 import 'script-loader!glide';
 import 'glidejs/dist/css/glide.core.css';
