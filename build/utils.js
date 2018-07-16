@@ -142,18 +142,10 @@ exports.createBaseConfig = function (options) {
         name: 'manifest',
         chunks: ['vendor']
       }),
-      // copy custom static assets
+      // copy public files
       new CopyWebpackPlugin([
         {
-          from: path.resolve(__dirname, '../static'),
-          to: config.build.assetsSubDirectory,
-          ignore: ['.*']
-        }
-      ]),
-      // copy data files
-      new CopyWebpackPlugin([
-        {
-          from: path.resolve(__dirname, '../data'),
+          from: path.resolve(__dirname, '../public'),
           to: path.resolve(__dirname, '../dist'),
           ignore: ['.*']
         }
