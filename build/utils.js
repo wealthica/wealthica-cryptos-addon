@@ -150,9 +150,6 @@ exports.createBaseConfig = function (options) {
           ignore: ['.*']
         }
       ]),
-      new UglifyJsPlugin({
-        sourceMap: true
-      }),
     ]
   });
 
