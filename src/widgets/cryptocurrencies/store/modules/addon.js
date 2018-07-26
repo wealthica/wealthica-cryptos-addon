@@ -27,7 +27,7 @@ const actions = {
     }
 
     let addon = new Addon({
-      scope: 'wealthica/wealthica-cryptos-addon/widgets/cryptocurrencies'
+      id: 'wealthica/wealthica-cryptos-addon/widgets/cryptocurrencies'
     });
 
     addon.on('init', updateOptions).on('update', updateOptions);
