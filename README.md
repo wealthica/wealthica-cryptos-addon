@@ -2,7 +2,9 @@
 
 This add-on provides the Cryptocurrencies widget that displays latest pricing for the most popular cryptocurrencies in Wealthica Dashboard.
 
-This repo also serves as an example of building add-ons for Wealthica using [Vue](https://vuejs.org), [webpack](https://webpack.js.org/).
+This repo also serves as an example of building add-ons for Wealthica using [wealthica.js](https://github.com/wealthica/wealthica.js), [Vue](https://vuejs.org) and [webpack](https://webpack.js.org/).
+
+To start creating your own add-on, see the instructions at [wealthica.js](https://github.com/wealthica/wealthica.js).
 
 ## Installation ##
 
