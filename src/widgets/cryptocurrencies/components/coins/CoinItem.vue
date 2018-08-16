@@ -12,7 +12,7 @@
     </td>
 
     <td class="item__price-cell">
-      <div class="item__price">{{ endPrice | formatPrice }}</div>
+      <div class="item__price">{{ formatPrice(endPrice) }}</div>
     </td>
 
     <td :class="{
@@ -27,7 +27,7 @@
         }">
           <img src="../../assets/img/arrow.svg" height="5" class="item__change-icon-image">
         </div>
-        <div class="item__change-number">{{ change | formatChangePercent }}</div>
+        <div class="item__change-number">{{ $num(change, '0.00%') }}</div>
       </div>
     </td>
   </tr>
@@ -35,7 +35,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import numeral from 'numeral';
 import SVGInjector from 'svg-injector';
 import * as _ from 'lodash';
 
@@ -76,18 +75,13 @@ export default {
     }
   },
 
-  filters: {
+  methods: {
     formatPrice (value, format='0,0.0[000000]') {
       if (value > 1) format = '0,0.00';
 
-      return numeral(value).format(format);
+      return this.$num(value, format);
     },
-    formatChangePercent (value, format='0.00%') {
-      return numeral(value).format(format);
-    }
-  },
 
-  methods: {
     updateCoin (coins=[]) {
       let symbol = this.symbol;
       if (coins.length) {
@@ -159,6 +153,7 @@ export default {
     background-color: $lighter-gray;
     border-radius: 2px;
     padding: 5px 9px;
+    white-space: nowrap;
 
     &-cell {
       padding-right: 10px;
@@ -217,6 +212,7 @@ export default {
       font-size: 0.9333rem;
       font-weight: bold;
       line-height: 1;
+      white-space: nowrap;
     }
 
     &-cell {
