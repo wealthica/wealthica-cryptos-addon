@@ -15,7 +15,7 @@
     "@wealthica/wealthica.js": "0.0.9",
     "async": "2.6.0",
     "autoprefixer": "7.2.4",
-    "axios": "0.17.1",
+    "axios": ">=0.18.1",
     "babel-cli": "6.26.0",
     "babel-eslint": "8.1.2",
     "babel-loader": "7.1.2",
@@ -58,7 +58,7 @@
     "vuedraggable": "2.16.0",
     "vuex": "3.0.1",
     "webpack": "3.10.0",
-    "webpack-bundle-analyzer": "2.9.1",
+    "webpack-bundle-analyzer": ">=3.3.2",
     "webpack-merge": "4.1.1"
   },
   "engines": {
