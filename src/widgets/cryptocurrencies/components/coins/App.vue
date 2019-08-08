@@ -21,7 +21,8 @@ import CoinPages from './CoinPages.vue';
 import Footer from './Footer.vue';
 import * as _ from 'lodash';
 
-import 'script-loader!glide';
+import 'script-loader!jquery/src/jquery';
+import 'script-loader!glidejs/dist/glide';
 import 'glidejs/dist/css/glide.core.css';
 
 export default {

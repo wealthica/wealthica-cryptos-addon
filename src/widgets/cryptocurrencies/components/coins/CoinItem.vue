@@ -107,7 +107,7 @@ export default {
 
 <style lang="scss">
 @import '../../styles/variables.scss';
-@import 'breakpoint-sass/stylesheets/breakpoint';
+@import '~breakpoint-sass/stylesheets/breakpoint';
 
 .item {
   td {
