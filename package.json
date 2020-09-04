@@ -27,7 +27,7 @@
     "jquery": "3.5.0",
     "lodash": "4.17.19",
     "moment": "2.24.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "numeral": "2.0.6",
     "sass-loader": "^7.1.0",
     "script-loader": "0.7.2",
