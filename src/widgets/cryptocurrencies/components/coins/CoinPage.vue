@@ -3,44 +3,44 @@
     <table class="list">
       <thead v-if="symbols.length">
         <tr>
-          <th></th>
-          <th class="price-header">{{ $t('price_currency', null, { currency: currency }) }}</th>
-          <th class="change-header">{{ $t('24h_change') }}</th>
+          <th />
+          <th class="price-header">
+            {{ $t("price_currency", null, { currency: currency }) }}
+          </th>
+          <th class="change-header">
+            {{ $t("24h_change") }}
+          </th>
         </tr>
       </thead>
       <tbody>
-        <CoinItem
-          v-for="symbol in symbols"
-          :key="symbol"
-          :symbol="symbol"
-        />
+        <CoinItem v-for="symbol in symbols" :key="symbol" :symbol="symbol" />
       </tbody>
     </table>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import CoinItem from './CoinItem';
+import { mapGetters } from "vuex";
+import CoinItem from "./CoinItem.vue";
 
 export default {
+  components: { CoinItem },
   props: {
     symbols: {
       type: Array,
       required: true
-    },
+    }
   },
-  components: { CoinItem },
   computed: {
     ...mapGetters({
-      currency: 'preferredCurrency'
+      currency: "preferredCurrency"
     })
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 .list {
   width: 100%;
@@ -69,5 +69,4 @@ th {
 .change-header {
   text-align: right;
 }
-
 </style>

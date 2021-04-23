@@ -5,9 +5,9 @@
         <CoinPages :pages="pages" />
       </div>
 
-      <div class="glide__bullets"></div>
+      <div class="glide__bullets" />
 
-      <div v-if="coins.length > 0" class='divider'></div>
+      <div v-if="coins.length > 0" class="divider" />
 
       <Footer v-if="coins.length > 0" />
     </div>
@@ -15,53 +15,55 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import * as constants from '../../constants';
-import CoinPages from './CoinPages.vue';
-import Footer from './Footer.vue';
-import * as _ from 'lodash';
+/* global $ */
+import { mapGetters } from "vuex";
+import * as _ from "lodash";
+import * as constants from "../../constants";
+import CoinPages from "./CoinPages.vue";
+import Footer from "./Footer.vue";
 
-import 'script-loader!glide';
-import 'glidejs/dist/css/glide.core.css';
+// eslint-disable-next-line import/no-extraneous-dependencies,import/no-webpack-loader-syntax
+import "script-loader!glide";
+import "glidejs/dist/css/glide.core.css";
 
 export default {
   components: { CoinPages, Footer },
 
   computed: {
     ...mapGetters({
-      coins: 'activeCoinSymbols'
+      coins: "activeCoinSymbols"
     }),
-    pages () {
+    pages() {
       return _.chunk(this.coins, constants.COINS_PER_PAGE);
     }
   },
 
   watch: {
-    coins (val) {
-      if (val.length) this.$store.dispatch('getActiveCoinPrices');
+    coins(val) {
+      if (val.length) this.$store.dispatch("getActiveCoinPrices");
     }
   },
 
-  created () {
-    this.$store.dispatch('initAddon');
-    this.$store.dispatch('getCoinsList');
+  created() {
+    this.$store.dispatch("initAddon");
+    this.$store.dispatch("getCoinsList");
   },
 
-  updated () {
+  updated() {
     if (this.pages.length <= 1) return;
 
     this.$nextTick(() => {
-      $('.glide').glide({
-        type: 'carousel',
+      $(".glide").glide({
+        type: "carousel",
         autoplay: false
       });
-    })
+    });
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 html {
   font-size: 15px;
@@ -70,7 +72,7 @@ html {
 }
 
 body {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
   min-width: 0;
   font-size: 15px;
   line-height: 1.4285em;
@@ -124,5 +126,4 @@ body {
     }
   }
 }
-
 </style>

@@ -3,104 +3,114 @@
     <div class="coins__lists-holder">
       <List
         :coins="activeCoins"
-        :isActive="true"
-        :maxReached="maxReached"
-        :minReached="minReached"
+        :is-active="true"
+        :max-reached="maxReached"
+        :min-reached="minReached"
         @remove="remove"
       />
 
       <List
         :coins="allCoins"
-        :activeCoins="activeCoins"
-        :isActive="false"
-        :maxReached="maxReached"
+        :active-coins="activeCoins"
+        :is-active="false"
+        :max-reached="maxReached"
         @add="add"
       />
     </div>
     <div class="footer">
       <div class="footer__left">
-        <div class="save-status">{{ saveStatus }}</div>
+        <div class="save-status">
+          {{ saveStatus }}
+        </div>
       </div>
       <div class="footer__right">
-        <div class="btn--save" :class="{'loading disabled': saving}" @click="saveConfig">{{ $t('save') }}</div>
+        <div class="btn--save" :class="{ 'loading disabled': saving }" @click="saveConfig">
+          {{ $t("save") }}
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import * as constants from '../../constants';
-import List from './List';
+import { mapGetters } from "vuex";
+import * as constants from "../../constants";
+import List from "./List.vue";
 
 export default {
   components: { List },
-  data () {
+  data() {
     return {
       activeCoins: [],
       maxReached: false,
       minReached: false,
       saving: false,
-      saveStatus: '',
+      saveStatus: "",
       statusTimer: null
-    }
+    };
   },
   computed: {
-    ...mapGetters(['activeCoinSymbols', 'allCoins']),
+    ...mapGetters(["activeCoinSymbols", "allCoins"])
   },
   watch: {
-    activeCoinSymbols (val) {
+    activeCoinSymbols(val) {
       this.activeCoins = val.slice();
     }
   },
+  created() {
+    this.$store.dispatch("initAddon");
+    this.$store.dispatch("getCoinsList");
+  },
   methods: {
-    add (symbol) {
+    add(symbol) {
       this.minReached = false;
 
-      if (this.activeCoins.length >= constants.MAX_ACTIVE_COINS)
-        return this.maxReached = true;
+      if (this.activeCoins.length >= constants.MAX_ACTIVE_COINS) {
+        this.maxReached = true;
+        return;
+      }
 
       this.activeCoins.push(symbol);
     },
-    remove (symbol) {
+    remove(symbol) {
       this.maxReached = false;
 
-      if (this.activeCoins.length <= constants.MIN_ACTIVE_COINS)
-        return this.minReached = true;
+      if (this.activeCoins.length <= constants.MIN_ACTIVE_COINS) {
+        this.minReached = true;
+        return;
+      }
 
       this.activeCoins = this.activeCoins.filter(x => x !== symbol);
     },
-    saveConfig () {
+    saveConfig() {
       this.saving = true;
-      this.saveStatus = '';
+      this.saveStatus = "";
       clearTimeout(this.statusTimer);
-      let newData = { coins: this.activeCoins };
+      const newData = { coins: this.activeCoins };
 
-      this.$store.dispatch('updateData', newData).then((response) => {
-        this.saving = false;
-      }).catch(() => {
-        this.saving = false;
-        this.saveStatus = this.$t('error_happened');
-        this.scheduleStatusReset();
-      });
+      this.$store
+        .dispatch("updateData", newData)
+        .then(() => {
+          this.saving = false;
+        })
+        .catch(() => {
+          this.saving = false;
+          this.saveStatus = this.$t("error_happened");
+          this.scheduleStatusReset();
+        });
     },
-    scheduleStatusReset () {
+    scheduleStatusReset() {
       clearTimeout(this.statusTimer);
       this.statusTimer = setTimeout(() => {
-        this.saveStatus = '';
+        this.saveStatus = "";
       }, 5000);
     }
-  },
-  created () {
-    this.$store.dispatch('initAddon');
-    this.$store.dispatch('getCoinsList');
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss">
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 @keyframes button-spin {
   from {
@@ -118,7 +128,7 @@ html {
 }
 
 body {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
   min-width: 0;
   font-size: 15px;
   line-height: 1.4285em;
@@ -156,7 +166,7 @@ body {
   height: 40px;
   line-height: 40px;
   padding: 0 12px;
-  font-size: .9333rem;
+  font-size: 0.9333rem;
   text-transform: none;
   min-width: 60px;
 
@@ -168,12 +178,15 @@ body {
     background-color: darken($purple, 10%) !important;
   }
 
-  &--disabled, &.disabled, &[disabled] {
+  &--disabled,
+  &.disabled,
+  &[disabled] {
     pointer-events: none !important;
     opacity: 0.5 !important;
   }
 
-  &--loading, &.loading {
+  &--loading,
+  &.loading {
     position: relative;
     cursor: default;
     text-shadow: none !important;
@@ -184,7 +197,7 @@ body {
 
     &:before {
       position: absolute;
-      content: '';
+      content: "";
       top: 50%;
       left: 50%;
       margin: -0.63333333em 0em 0em -0.63333333em;
@@ -196,7 +209,7 @@ body {
 
     &:after {
       position: absolute;
-      content: '';
+      content: "";
       top: 50%;
       left: 50%;
       margin: -0.63333333em 0em 0em -0.63333333em;
@@ -205,7 +218,7 @@ body {
       animation: button-spin 0.6s linear;
       animation-iteration-count: infinite;
       border-radius: 500rem;
-      border-color: #FFFFFF transparent transparent;
+      border-color: #ffffff transparent transparent;
       border-style: solid;
       border-width: 0.2em;
       box-shadow: 0px 0px 0px 1px transparent;
@@ -218,7 +231,8 @@ body {
   align-items: center;
   justify-content: space-between;
 
-  &__left, &__right {
+  &__left,
+  &__right {
     display: flex;
     align-items: center;
   }
@@ -227,5 +241,4 @@ body {
     margin-left: 25px;
   }
 }
-
 </style>

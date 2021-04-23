@@ -1,5 +1,6 @@
-import numeral from 'numeral';
-import 'numeral/locales/fr-ca';
+/* eslint-disable no-param-reassign */
+import numeral from "numeral";
+import "numeral/locales/fr-ca";
 
 let vm;
 
@@ -8,13 +9,13 @@ export default {
     if (!vm) {
       vm = new Vue({
         methods: {
-          setLanguage (language) {
-            numeral.locale(language === 'fr' ? 'fr-ca' : 'en')
+          setLanguage(language) {
+            numeral.locale(language === "fr" ? "fr-ca" : "en");
           },
 
-          _format (value, format='0,0') {
+          _format(value, format = "0,0") {
             return numeral(value).format(format);
-          },
+          }
         }
       });
 
