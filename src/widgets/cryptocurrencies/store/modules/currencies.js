@@ -1,8 +1,8 @@
-import * as types from '../mutation-types';
+import * as types from "../mutation-types";
 
 // initial state
-const state = {
-  preferred: ''
+const initialState = {
+  preferred: ""
 };
 
 // getters
@@ -12,33 +12,36 @@ const getters = {
 
 // actions
 const actions = {
-  getPreferredCurrency ({ commit, rootGetters }) {
-    return new Promise((resolve, reject) => {
-      let storeCurrency = (currency) => {
-        commit(types.RECEIVE_PREFERRED_CURRENCY, { currency: currency });
+  getPreferredCurrency({ commit, rootGetters }) {
+    return new Promise(resolve => {
+      const storeCurrency = currency => {
+        commit(types.RECEIVE_PREFERRED_CURRENCY, { currency });
         resolve(currency);
-      }
+      };
 
-      rootGetters.addon.api.getCurrencies().then(currencies => {
-        let preferred = currencies.find(x => x.preferred);
-        storeCurrency(preferred._id.toUpperCase());
-      }).catch(() => {
-        storeCurrency('CAD');
-      })
+      rootGetters.addon.api
+        .getCurrencies()
+        .then(currencies => {
+          const preferred = currencies.find(x => x.preferred);
+          storeCurrency(preferred._id.toUpperCase());
+        })
+        .catch(() => {
+          storeCurrency("CAD");
+        });
     });
   }
 };
 
 // mutations
 const mutations = {
-  [types.RECEIVE_PREFERRED_CURRENCY] (state, { currency }) {
+  [types.RECEIVE_PREFERRED_CURRENCY](state, { currency }) {
     state.preferred = currency;
   }
 };
 
 export default {
-  state,
+  state: initialState,
   getters,
   actions,
   mutations
-}
+};

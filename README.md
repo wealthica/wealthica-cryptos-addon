@@ -12,11 +12,11 @@ This project uses [`yarn`](https://yarnpkg.com/en/docs/install) for dependency m
 
 ### Install dependencies
 
-`yarn install` (or `npm install`)
+    yarn install # or `npm install`
 
 ### Build
 
-`yarn build` (or `npm run build`)
+    yarn build # or `npm run build`
 
 Build result will show up under `dist/`
 
@@ -65,3 +65,20 @@ This file provides the add-on's information. Example:
         "data:image/jpeg;base64,..."
       ]
     }
+
+## Development
+
+### Compiles and hot-reloads for development
+
+    yarn serve
+
+### Run your unit tests
+
+    yarn test:unit
+
+### Lints and fixes files
+
+    yarn lint
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

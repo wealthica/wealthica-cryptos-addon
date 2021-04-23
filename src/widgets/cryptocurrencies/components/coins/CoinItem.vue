@@ -3,7 +3,7 @@
     <td class="item__currency-cell">
       <div class="item__currency" :title="coin.CoinName">
         <div class="item__currency-image">
-          <img :src="coin.LogoUrl" height="24">
+          <img :src="coin.LogoUrl" height="24" />
         </div>
         <div class="item__currency-symbol">
           {{ symbol }}
@@ -12,102 +12,112 @@
     </td>
 
     <td class="item__price-cell">
-      <div class="item__price">{{ formatPrice(endPrice) }}</div>
+      <div class="item__price">
+        {{ formatPrice(endPrice) }}
+      </div>
     </td>
 
-    <td :class="{
-      'item__change-cell': true,
-      green: change && change > 0,
-      red: change && change < 0
-    }">
+    <td
+      :class="{
+        'item__change-cell': true,
+        green: change && change > 0,
+        red: change && change < 0
+      }"
+    >
       <div class="item__change">
-        <div class="item__change-icon" :class="{
-          up: change && change > 0,
-          down: change && change < 0
-        }">
-          <img src="../../assets/img/arrow.svg" height="5" class="item__change-icon-image">
+        <div
+          class="item__change-icon"
+          :class="{
+            up: change && change > 0,
+            down: change && change < 0
+          }"
+        >
+          <img src="../../assets/img/arrow.svg" height="5" class="item__change-icon-image" />
         </div>
-        <div class="item__change-number">{{ $num(change, '0.00%') }}</div>
+        <div class="item__change-number">
+          {{ $num(change, "0.00%") }}
+        </div>
       </div>
     </td>
   </tr>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import SVGInjector from 'svg-injector';
-import * as _ from 'lodash';
+import { mapGetters } from "vuex";
+import SVGInjector from "svg-injector";
+import * as _ from "lodash";
 
 export default {
   props: {
     symbol: {
       type: String,
       required: true
-    },
+    }
   },
 
-  data () {
+  data() {
     return {
       coin: {}
-    }
+    };
   },
 
   computed: {
     ...mapGetters({
-      currency: 'preferredCurrency',
-      coins: 'activeCoins',
-      prices: 'prices',
+      currency: "preferredCurrency",
+      coins: "activeCoins",
+      prices: "prices"
     }),
-    flagUrl () {
-      return require(`../../assets/img/flag_${this.currency.toLowerCase()}.svg`)
+    flagUrl() {
+      // eslint-disable-next-line global-require,import/no-dynamic-require
+      return require(`../../assets/img/flag_${this.currency.toLowerCase()}.svg`);
     },
-    endPrice () {
-      return this.prices[this.symbol] ? this.prices[this.symbol][this.currency]['PRICE'] : null;
+    endPrice() {
+      return this.prices[this.symbol] ? this.prices[this.symbol][this.currency].PRICE : null;
     },
-    change () {
-      return this.prices[this.symbol] ? this.prices[this.symbol][this.currency]['CHANGEPCT24HOUR'] / 100 : null;
-    },
+    change() {
+      return this.prices[this.symbol]
+        ? this.prices[this.symbol][this.currency].CHANGEPCT24HOUR / 100
+        : null;
+    }
   },
 
   watch: {
-    coins (val) {
+    coins(val) {
       this.updateCoin(val);
     }
   },
 
-  methods: {
-    formatPrice (value, format='0,0.0[000000]') {
-      if (value > 1) format = '0,0.00';
+  created() {
+    this.updateCoin(this.coins);
+  },
 
-      return this.$num(value, format);
+  updated() {
+    this.injectSVG();
+  },
+
+  methods: {
+    formatPrice(value, format = "0,0.0[000000]") {
+      return this.$num(value, value > 1 ? "0,0.00" : format);
     },
 
-    updateCoin (coins=[]) {
-      let symbol = this.symbol;
+    updateCoin(coins = []) {
+      const { symbol } = this;
       if (coins.length) {
-        let coin = coins.find(x => x.Symbol === symbol);
+        const coin = coins.find(x => x.Symbol === symbol);
         coin.LogoUrl = `https://www.cryptocompare.com${coin.ImageUrl}`;
         this.coin = _.extend({}, this.coin, coin);
       }
     },
-    injectSVG () {
-      SVGInjector(this.$el.getElementsByClassName('item__change-icon-image'));
+    injectSVG() {
+      SVGInjector(this.$el.getElementsByClassName("item__change-icon-image"));
     }
-  },
-
-  created () {
-    this.updateCoin(this.coins);
-  },
-
-  updated () {
-    this.injectSVG();
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import '../../styles/variables.scss';
-@import '~breakpoint-sass/stylesheets/breakpoint';
+@import "../../styles/variables.scss";
+@import "~breakpoint-sass/stylesheets/breakpoint";
 
 .item {
   td {
@@ -226,5 +236,4 @@ export default {
     }
   }
 }
-
 </style>

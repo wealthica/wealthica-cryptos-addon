@@ -1,48 +1,57 @@
 <template>
-  <div class="coins__list" :class="{'coins__list--available': !isActive}">
-    <div class="coins__list-header" v-if="isActive">{{ $t('active_cryptocurrencies') }}</div>
-    <div class="coins__list-header" v-else>{{ $t('available_cryptocurrencies') }}</div>
-
-    <div v-if="isActive" class="coins__list-note" :class="{error: maxReached || minReached}">{{ $t('num_active_cryptocurrencies_allowed', null, { min: minActiveCoins, max: maxActiveCoins }) }}</div>
-    <div v-else class="coins__list-note">
-      <input type="text" class="coins__search" v-model="search" :placeholder="$t('search_placeholder')">
+  <div class="coins__list" :class="{ 'coins__list--available': !isActive }">
+    <div v-if="isActive" class="coins__list-header">
+      {{ $t("active_cryptocurrencies") }}
+    </div>
+    <div v-else class="coins__list-header">
+      {{ $t("available_cryptocurrencies") }}
     </div>
 
-    <draggable
-      v-if="isActive"
-      :list="coins"
-      class="coins__items coins__items--active">
+    <div v-if="isActive" class="coins__list-note" :class="{ error: maxReached || minReached }">
+      {{
+        $t("num_active_cryptocurrencies_allowed", null, {
+          min: minActiveCoins,
+          max: maxActiveCoins
+        })
+      }}
+    </div>
+    <div v-else class="coins__list-note">
+      <input
+        v-model="search"
+        type="text"
+        class="coins__search"
+        :placeholder="$t('search_placeholder')"
+      />
+    </div>
 
-       <ActiveItem
-         v-for="symbol in coins"
-         :key="symbol"
-         :symbol="symbol"
-         @remove="remove"
-       />
+    <draggable v-if="isActive" :list="coins" class="coins__items coins__items--active">
+      <ActiveItem v-for="symbol in coins" :key="symbol" :symbol="symbol" @remove="remove" />
     </draggable>
 
-    <div v-else class="coins__items coins__items--available">
-      <AvailableItem
-        v-if="filteredCoins.length"
-        v-for="coin in filteredCoins"
-        :key="coin.Id"
-        :coin="coin"
-        @add="add"
-      />
+    <div v-else-if="filteredCoins.length" class="coins__items coins__items--available">
+      <AvailableItem v-for="coin in filteredCoins" :key="coin.Id" :coin="coin" @add="add" />
 
-      <div v-if="!filteredCoins.length && coins.length" class="coins__search-no-result">{{ $t('nothing_matched') }}</div>
+      <div v-if="!filteredCoins.length && coins.length" class="coins__search-no-result">
+        {{ $t("nothing_matched") }}
+      </div>
+    </div>
+
+    <div v-else-if="coins.length" class="coins__items coins__items--available">
+      <div class="coins__search-no-result">
+        {{ $t("nothing_matched") }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import draggable from 'vuedraggable';
-import * as constants from '../../constants';
-import ActiveItem from './ActiveItem';
-import AvailableItem from './AvailableItem';
+import draggable from "vuedraggable";
+import * as constants from "../../constants";
+import ActiveItem from "./ActiveItem.vue";
+import AvailableItem from "./AvailableItem.vue";
 
 export default {
+  components: { draggable, ActiveItem, AvailableItem },
   props: {
     coins: {
       type: Array,
@@ -50,7 +59,8 @@ export default {
     },
     activeCoins: {
       type: Array,
-      required: false
+      required: false,
+      default: () => []
     },
     isActive: {
       type: Boolean,
@@ -63,28 +73,26 @@ export default {
     minReached: {
       type: Boolean,
       required: true
-    },
-  },
-
-  data () {
-    return {
-      search: '',
     }
   },
 
-  components: { draggable, ActiveItem, AvailableItem },
+  data() {
+    return {
+      search: ""
+    };
+  },
 
   computed: {
-    filteredCoins () {
-      let filteredCoins;
-      let search = this.search;
+    filteredCoins() {
+      let { search } = this;
 
-      filteredCoins = this.coins.filter((x) => {
-        let isInactive = this.activeCoins.indexOf(x.Symbol) === -1;
+      const filteredCoins = this.coins.filter(x => {
+        const isInactive = this.activeCoins.indexOf(x.Symbol) === -1;
         let matched = true;
         if (search && search.length) {
           search = search.toLowerCase();
-          matched = x.CoinName.toLowerCase().indexOf(search) > -1 ||
+          matched =
+            x.CoinName.toLowerCase().indexOf(search) > -1 ||
             x.Symbol.toLowerCase().indexOf(search) > -1;
         }
 
@@ -94,30 +102,34 @@ export default {
       // show max 50 results
       return filteredCoins.slice(0, 50);
     },
-    minActiveCoins () { return constants.MIN_ACTIVE_COINS },
-    maxActiveCoins () { return constants.MAX_ACTIVE_COINS },
+    minActiveCoins() {
+      return constants.MIN_ACTIVE_COINS;
+    },
+    maxActiveCoins() {
+      return constants.MAX_ACTIVE_COINS;
+    }
   },
 
   methods: {
-    add (symbol) {
-      this.$emit('add', symbol);
+    add(symbol) {
+      this.$emit("add", symbol);
     },
 
-    remove (symbol) {
-      this.$emit('remove', symbol);
-    },
+    remove(symbol) {
+      this.$emit("remove", symbol);
+    }
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import '../../styles/variables.scss';
-@import '../../styles/mixins.scss';
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
 
 .coins {
   &__list {
     margin-bottom: 20px;
-    width: calc((100% - 25px)/2);
+    width: calc((100% - 25px) / 2);
 
     &--available {
       margin-left: 25px;
